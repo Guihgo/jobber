@@ -17,9 +17,9 @@ import jobber.gui.Frm_Login;
 
 public class Main {
     public static void main(String args[]) {
-    	//agora sim !!!
         System.out.println("Estamos rodando !!!");
         Frm_Login l = new Frm_Login();
+        l.setLocationRelativeTo(null);
         l.setVisible(true);
     }
 }
