@@ -1,10 +1,8 @@
 /jobber/nbproject/private/
 /jobber/build/
 /.metadata/
-jobber/.idea
-jobber/.idea
-jobber/.idea/misc.xml
-jobber/.idea/modules.xml
-jobber/.idea/workspace.xml
+misc.xml
+modules.xml
+workspace.xml
 jobber/nbproject
 jobber/out
