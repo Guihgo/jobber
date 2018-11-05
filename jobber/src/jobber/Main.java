@@ -5,6 +5,11 @@
  */
 package jobber;
 
+import jobber.gui.Frm_Login;
+
+
+
+
 /**
  *
  * @author rfutenma
@@ -13,5 +18,7 @@ package jobber;
 public class Main {
     public static void main(String args[]) {
         System.out.println("Estamos rodando !!!");
+        Frm_Login l = new Frm_Login();
+        l.setVisible(true);
     }
 }
