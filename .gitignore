@@ -2,3 +2,5 @@
 /jobber/build/
 /.metadata/
 /jobber/.idea/
+/jobber/nbproject/
+/jobber/out/
