@@ -65,6 +65,7 @@ public class Frm_Login extends javax.swing.JFrame {
         getContentPane().add(btn_cadastre, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 240, -1, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
