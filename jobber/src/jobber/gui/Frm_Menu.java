@@ -6,6 +6,7 @@
 package jobber.gui;
 
 import javax.swing.JOptionPane;
+import jobber.gui.cliente.IFrm_Combinando;
 
 /**
  *
@@ -29,11 +30,22 @@ public class Frm_Menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jDesktopPane1 = new javax.swing.JDesktopPane();
+        panel_cliente = new javax.swing.JPanel();
+        btn_buscar = new javax.swing.JButton();
+        btn_combinandoCli = new javax.swing.JButton();
+        btn_configCli = new javax.swing.JButton();
+        Desktop = new javax.swing.JDesktopPane();
+        panel_trabalhador = new javax.swing.JPanel();
+        btn_gerenciarTrab = new javax.swing.JButton();
+        btn_combinandoTrab = new javax.swing.JButton();
+        btn_configTrab = new javax.swing.JButton();
+        panel_info = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        lbl_tipo = new javax.swing.JLabel();
+        lbl_nome = new javax.swing.JLabel();
+        lbl_email2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(800, 600));
@@ -42,47 +54,99 @@ public class Frm_Menu extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Cliente"));
-        jPanel2.setEnabled(false);
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panel_cliente.setBorder(javax.swing.BorderFactory.createTitledBorder("Cliente"));
+        panel_cliente.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_buscar.setText("Buscar Trabalho");
+        btn_buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_buscarActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 130, -1));
+        panel_cliente.add(btn_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 130, -1));
 
-        jButton5.setText("jButton5");
-        jPanel2.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 130, -1));
+        btn_combinandoCli.setText("Combinando");
+        btn_combinandoCli.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_combinandoCliActionPerformed(evt);
+            }
+        });
+        panel_cliente.add(btn_combinandoCli, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 130, -1));
 
-        jButton6.setText("jButton6");
-        jPanel2.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 130, -1));
+        btn_configCli.setText("Configurações");
+        panel_cliente.add(btn_configCli, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 130, -1));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 160, 220));
-        jPanel2.getAccessibleContext().setAccessibleName("");
+        getContentPane().add(panel_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 160, 160));
+        panel_cliente.getAccessibleContext().setAccessibleName("");
 
-        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
-        jDesktopPane1.setLayout(jDesktopPane1Layout);
-        jDesktopPane1Layout.setHorizontalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout DesktopLayout = new javax.swing.GroupLayout(Desktop);
+        Desktop.setLayout(DesktopLayout);
+        DesktopLayout.setHorizontalGroup(
+            DesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 580, Short.MAX_VALUE)
         );
-        jDesktopPane1Layout.setVerticalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+        DesktopLayout.setVerticalGroup(
+            DesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 520, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jDesktopPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 30, 580, 500));
+        getContentPane().add(Desktop, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 30, 580, 520));
+
+        panel_trabalhador.setBorder(javax.swing.BorderFactory.createTitledBorder("Trabalhador"));
+        panel_trabalhador.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btn_gerenciarTrab.setText("Trabalhos");
+        btn_gerenciarTrab.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_gerenciarTrabActionPerformed(evt);
+            }
+        });
+        panel_trabalhador.add(btn_gerenciarTrab, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 130, -1));
+
+        btn_combinandoTrab.setText("Combinando");
+        panel_trabalhador.add(btn_combinandoTrab, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 130, -1));
+
+        btn_configTrab.setText("Configurações");
+        panel_trabalhador.add(btn_configTrab, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 130, -1));
+
+        getContentPane().add(panel_trabalhador, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 160, 160));
+
+        panel_info.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setText("Tipo:");
+        panel_info.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
+
+        jLabel1.setText("Nome:");
+        panel_info.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, -1, -1));
+
+        jLabel3.setText("Email:");
+        panel_info.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
+        panel_info.add(lbl_tipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 140, 20));
+        panel_info.add(lbl_nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 140, 20));
+        panel_info.add(lbl_email2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 140, 20));
+
+        getContentPane().add(panel_info, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 160, 140));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
+    JOptionPane.showMessageDialog(null, "Ola");
+    }//GEN-LAST:event_btn_buscarActionPerformed
+
+    private void btn_gerenciarTrabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_gerenciarTrabActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_gerenciarTrabActionPerformed
+
+    private void btn_combinandoCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_combinandoCliActionPerformed
+        IFrm_Combinando frm = new IFrm_Combinando();
+        Desktop.add(frm);
+        int x = (Desktop.getWidth()/2) - frm.getWidth()/2;
+        int y = (Desktop.getHeight()/2) - frm.getHeight()/2;
+        frm.setLocation(x, y);
+        frm.show();                
+    }//GEN-LAST:event_btn_combinandoCliActionPerformed
 
     /**
      * @param args the command line arguments
@@ -120,10 +184,21 @@ public class Frm_Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JDesktopPane jDesktopPane1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JDesktopPane Desktop;
+    private javax.swing.JButton btn_buscar;
+    private javax.swing.JButton btn_combinandoCli;
+    private javax.swing.JButton btn_combinandoTrab;
+    private javax.swing.JButton btn_configCli;
+    private javax.swing.JButton btn_configTrab;
+    private javax.swing.JButton btn_gerenciarTrab;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel lbl_email2;
+    private javax.swing.JLabel lbl_nome;
+    private javax.swing.JLabel lbl_tipo;
+    private javax.swing.JPanel panel_cliente;
+    private javax.swing.JPanel panel_info;
+    private javax.swing.JPanel panel_trabalhador;
     // End of variables declaration//GEN-END:variables
 }

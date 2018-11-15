@@ -30,7 +30,6 @@ public class Frm_Login extends javax.swing.JFrame {
         txt_usuario = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         btn_logar = new javax.swing.JButton();
-        btn_esqueci = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txt_senha = new javax.swing.JPasswordField();
@@ -42,27 +41,24 @@ public class Frm_Login extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(500, 400));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(txt_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 130, 110, -1));
+        getContentPane().add(txt_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, 190, -1));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Login");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 70, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 80, -1, -1));
 
         btn_logar.setText("Logar");
-        getContentPane().add(btn_logar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 240, -1, -1));
+        getContentPane().add(btn_logar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, -1, -1));
 
-        btn_esqueci.setText("Esqueci Senha");
-        getContentPane().add(btn_esqueci, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 240, -1, -1));
-
-        jLabel2.setText("Usuario:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 130, -1, -1));
+        jLabel2.setText("Email:");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 140, -1, -1));
 
         jLabel3.setText("Senha:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 170, -1, -1));
-        getContentPane().add(txt_senha, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 170, 110, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, -1, -1));
+        getContentPane().add(txt_senha, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, 190, -1));
 
         btn_cadastre.setText("Cadastre");
-        getContentPane().add(btn_cadastre, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 240, -1, -1));
+        getContentPane().add(btn_cadastre, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 250, -1, -1));
 
         pack();
         setLocationRelativeTo(null);
@@ -105,7 +101,6 @@ public class Frm_Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_cadastre;
-    private javax.swing.JButton btn_esqueci;
     private javax.swing.JButton btn_logar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
