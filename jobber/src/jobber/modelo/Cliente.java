@@ -1,6 +1,6 @@
-package jobber;
+package jobber.modelo;
 
-public class Cliente extends Conta{
+public class Cliente extends Conta {
 
 	private Processo processos[];
 	

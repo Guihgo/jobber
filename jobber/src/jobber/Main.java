@@ -5,6 +5,9 @@
  */
 package jobber;
 
+import java.util.Map;
+
+import jobber.backend.Conexao;
 import jobber.gui.Frm_Login;
 
 /**
@@ -16,7 +19,13 @@ import jobber.gui.Frm_Login;
 public class Main {
     public static void main(String args[]) {
         System.out.println("Estamos rodando !");
-        Frm_Login l = new Frm_Login();
-        l.setVisible(true);
+        Conexao conexao = new Conexao();
+
+        if(conexao.carregaDriver()) {
+            System.out.println("Driver carregado");
+            if(conexao.conecta()) {
+                Frm_Login l = new Frm_Login(conexao);
+            }
+        }
     }
 }

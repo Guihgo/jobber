@@ -8,17 +8,35 @@ package jobber.gui;
 import javax.swing.JOptionPane;
 import jobber.gui.cliente.IFrm_Combinando;
 
+import jobber.backend.Conexao;
+import jobber.modelo.Conta;
+
 /**
  *
  * @author rfutenma
  */
 public class Frm_Menu extends javax.swing.JFrame {
 
+    Conexao conexao = null;
+    Conta conta;
+
     /**
      * Creates new form Frm_Menu
      */
     public Frm_Menu() {
         initComponents();
+    }
+
+    public Frm_Menu(Conexao conexao, Conta conta) {
+        this.conexao = conexao;
+        this.conta = conta;
+        initComponents();
+        init();
+    }
+
+    private void init(){
+        JOptionPane.showMessageDialog(this, "A conta é do tipo: "+ conta.getTipo());
+        this.setVisible(true);
     }
 
     /**

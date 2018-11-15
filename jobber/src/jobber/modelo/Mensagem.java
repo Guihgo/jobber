@@ -1,4 +1,4 @@
-package jobber;
+package jobber.modelo;
 
 public class Mensagem {
 
