@@ -6,18 +6,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Conta extends Conexao{
+public class Login extends Conexao{
 
     Connection conn;
     PreparedStatement ps = null;
     Statement stmt = null;
     ResultSet rs = null;
 
-    public Conta(Connection connection){
+    public Login(Connection connection){
         this.conn = connection;
     }
 
-    public jobber.modelo.Conta login(String email, String password){
+    public jobber.modelo.Conta tenta(String email, String password){
         jobber.modelo.Conta conta = new jobber.modelo.Conta();
         try {
             ps = this.conn.prepareStatement("SELECT * FROM conta WHERE conta_email=? AND conta_senha=? LIMIT 1");

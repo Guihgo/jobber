@@ -8,11 +8,10 @@ package jobber.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import jobber.backend.Conexao;
-import jobber.backend.Conta;
+import jobber.backend.Login;
 
 /**
  *
@@ -138,8 +137,8 @@ public class Frm_Login extends javax.swing.JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         if(actionEvent.getSource()==btn_logar) {
-            Conta conta = new Conta(conexao.getConnection());
-            jobber.modelo.Conta contaModelo = conta.login(txt_usuario.getText(), String.valueOf(txt_senha.getPassword()));
+            Login login = new Login(conexao.getConnection());
+            jobber.modelo.Conta contaModelo = login.tenta(txt_usuario.getText(), String.valueOf(txt_senha.getPassword()));
             if(contaModelo.getLogado()) {
                 this.setVisible(false);
                 Frm_Menu frm_menu = new Frm_Menu(this.conexao, contaModelo);
