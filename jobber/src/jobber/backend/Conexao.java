@@ -10,7 +10,7 @@ import java.sql.Statement;
 public class Conexao {
     private static String url = "jdbc:mysql://us-cdbr-iron-east-01.cleardb.net/heroku_b0965c26597b33a?reconnect=true";
     private static String user = "b8cad8e341f4a3";
-    private static String password = "2b01e897";
+    private static String password = System.getenv("HEROKU_DB_PASS");
     private static String fullUrlConnection = "mysql://b8cad8e341f4a3:2b01e897@us-cdbr-iron-east-01.cleardb.net/heroku_b0965c26597b33a?reconnect=true";
 
     Connection conn = null;
@@ -33,12 +33,9 @@ public class Conexao {
 
     public boolean conecta() {
         try {
-            conn = DriverManager.getConnection(url, user, password);
-            stmt = conn.createStatement();
-            rs = stmt.executeQuery("SELECT * FROM conta");
-            rs.last();
-            System.out.println("rs.row() " + String.valueOf(rs.getRow()));
-
+            this.conn = DriverManager.getConnection(url, user, password);
+            System.out.println("Conectado com sucesso " + this.conn.getCatalog());
+            return true;
         } catch (SQLException ex) {
             // handle any errors
             System.out.println("SQLException: " + ex.getMessage());
@@ -46,26 +43,27 @@ public class Conexao {
             System.out.println("VendorError: " + ex.getErrorCode());
             return false;
         }
-        finally {
-            if(rs!=null) {
-                try {
-                    rs.close();
-                } catch (SQLException sqlEx) {}
-
-                rs = null;
-            }
-            if (stmt != null) {
-                try {
-                    stmt.close();
-                } catch (SQLException sqlEx) {}
-
-                stmt = null;
-            }
-            return true;
-        }
-
     }
 
-    //    String query = "SELECT VERSION()";
+    public Connection getConnection() {
+        return this.conn;
+    }
+
+    public void closeStatement(Statement stmt, ResultSet rs){
+        if(rs!=null) {
+            try {
+                rs.close();
+            } catch (SQLException sqlEx) {}
+
+            rs = null;
+        }
+        if (stmt != null) {
+            try {
+                stmt.close();
+            } catch (SQLException sqlEx) {}
+
+            stmt = null;
+        }
+    }
 
 }

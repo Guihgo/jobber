@@ -5,17 +5,48 @@
  */
 package jobber.gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import jobber.backend.Conexao;
+import jobber.backend.Conta;
+
 /**
  *
  * @author rfutenma
  */
 public class Frm_Login extends javax.swing.JFrame {
 
+    JFrame thisJFrame;
+    Conexao conexao = null;
+
     /**
      * Creates new form Frm_Login
      */
     public Frm_Login() {
         initComponents();
+    }
+    public Frm_Login(Conexao conexao) {
+        this.thisJFrame = this;
+        this.conexao = conexao;
+        initComponents();
+        init();
+    }
+
+    private void init(){
+        btn_logar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Conta conta = new Conta(conexao.getConnection());
+                jobber.modelo.Conta contaModelo = conta.login(txt_usuario.getText(), String.valueOf(txt_senha.getPassword()));
+                JOptionPane.showMessageDialog(thisJFrame, contaModelo.getTipo());
+            }
+        });
+
+        this.setVisible(true);
     }
 
     /**
