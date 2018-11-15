@@ -2,6 +2,7 @@ package jobber.modelo;
 
 public class Conta {
 
+	private boolean logado = false;
 	private String nome;
 	private String email;
 	private String senha;
@@ -22,15 +23,14 @@ public class Conta {
 	public String getEmail() {
 		return this.email;
 	}
-	
-	
-	public void setSenha(String senha) {
-		this.senha = senha;
+
+	public void setLogado(boolean logado) {
+		this.logado = logado;
 	}
-	public String getSenha() {
-		return this.senha;
+
+	public boolean getLogado() {
+		return this.logado;
 	}
-	
 	
 	public void setId(int id) {
 		this.id = id;

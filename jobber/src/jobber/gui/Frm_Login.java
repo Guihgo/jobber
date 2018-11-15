@@ -18,9 +18,8 @@ import jobber.backend.Conta;
  *
  * @author rfutenma
  */
-public class Frm_Login extends javax.swing.JFrame {
+public class Frm_Login extends javax.swing.JFrame implements ActionListener{
 
-    JFrame thisJFrame;
     Conexao conexao = null;
 
     /**
@@ -30,21 +29,13 @@ public class Frm_Login extends javax.swing.JFrame {
         initComponents();
     }
     public Frm_Login(Conexao conexao) {
-        this.thisJFrame = this;
         this.conexao = conexao;
         initComponents();
         init();
     }
 
     private void init(){
-        btn_logar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Conta conta = new Conta(conexao.getConnection());
-                jobber.modelo.Conta contaModelo = conta.login(txt_usuario.getText(), String.valueOf(txt_senha.getPassword()));
-                JOptionPane.showMessageDialog(thisJFrame, contaModelo.getTipo());
-            }
-        });
+        btn_logar.addActionListener(this);
 
         this.setVisible(true);
     }
@@ -143,5 +134,19 @@ public class Frm_Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPasswordField txt_senha;
     private javax.swing.JTextField txt_usuario;
+
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
+        if(actionEvent.getSource()==btn_logar) {
+            Conta conta = new Conta(conexao.getConnection());
+            jobber.modelo.Conta contaModelo = conta.login(txt_usuario.getText(), String.valueOf(txt_senha.getPassword()));
+            if(contaModelo.getLogado()) {
+                this.setVisible(false);
+                Frm_Menu frm_menu = new Frm_Menu(this.conexao, contaModelo);
+            } else {
+                JOptionPane.showMessageDialog(this, "Usuario e/ou senha estão incorretos. Tente novamente");
+            }
+        }
+    }
     // End of variables declaration//GEN-END:variables
 }

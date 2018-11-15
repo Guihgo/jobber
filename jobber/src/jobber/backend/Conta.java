@@ -20,17 +20,19 @@ public class Conta extends Conexao{
     public jobber.modelo.Conta login(String email, String password){
         jobber.modelo.Conta conta = new jobber.modelo.Conta();
         try {
-            System.out.println(conn.getCatalog());
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
-            ps = this.conn.prepareStatement("SELECT * FROM conta");
-//            ps.setString(1, email);
+            ps = this.conn.prepareStatement("SELECT * FROM conta WHERE conta_email=? AND conta_senha=? LIMIT 1");
+            ps.setString(1, email);
+            ps.setString(2, password);
             rs = ps.executeQuery();
-
-            System.out.println("rs: "+ rs.getRow());
+            if(rs.last()) {
+                conta.setLogado(true);
+                conta.setId(rs.getInt("conta_id"));
+                conta.setEmail(rs.getString("conta_email"));
+                conta.setNome(rs.getString("conta_nome"));
+                conta.setTipo(rs.getInt("conta_tipo"));
+            } else {
+                conta.setLogado(false);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

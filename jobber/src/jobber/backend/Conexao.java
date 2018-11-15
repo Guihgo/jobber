@@ -8,7 +8,7 @@ import java.sql.Statement;
 
 
 public class Conexao {
-    private static String url = "jdbc:mysql://us-cdbr-iron-east-01.cleardb.net/heroku_b0965c26597b33a?reconnect=true";
+    private static String url = "jdbc:mysql://us-cdbr-iron-east-01.cleardb.net/heroku_b0965c26597b33a?reconnect=true,autoReconnect=true";
     private static String user = "b8cad8e341f4a3";
     private static String password = System.getenv("HEROKU_DB_PASS");
     private static String fullUrlConnection = "mysql://b8cad8e341f4a3:2b01e897@us-cdbr-iron-east-01.cleardb.net/heroku_b0965c26597b33a?reconnect=true";
@@ -66,4 +66,16 @@ public class Conexao {
         }
     }
 
+    public void showTableResultSet(ResultSet rs) {
+        try {
+            System.out.println("Table: " + rs.getMetaData().getTableName(1));
+            for  (int i = 1; i<= rs.getMetaData().getColumnCount(); i++){
+                System.out.print(rs.getMetaData().getColumnName(i) + " | ");
+            }
+            System.out.println();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
