@@ -35,7 +35,7 @@ public class Frm_Login extends javax.swing.JFrame implements ActionListener{
 
     private void init(){
         btn_logar.addActionListener(this);
-
+        setTitle("Faça o login");
         this.setVisible(true);
     }
 
