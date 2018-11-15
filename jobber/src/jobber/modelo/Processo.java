@@ -1,4 +1,6 @@
-package jobber;
+package jobber.modelo;
+
+import jobber.modelo.Mensagem;
 
 public class Processo {
 
