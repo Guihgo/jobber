@@ -35,7 +35,7 @@ public class Frm_Login extends javax.swing.JFrame implements ActionListener{
 
     private void init(){
         btn_logar.addActionListener(this);
-        setTitle("Faça o login");
+        setTitle("Faï¿½a o login");
         this.setVisible(true);
     }
 
@@ -128,19 +128,5 @@ public class Frm_Login extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPasswordField txt_senha;
     private javax.swing.JTextField txt_usuario;
-
-    @Override
-    public void actionPerformed(ActionEvent actionEvent) {
-        if(actionEvent.getSource()==btn_logar) {
-            Login login = new Login(conexao.getConnection());
-            jobber.modelo.Conta contaModelo = login.tenta(txt_usuario.getText(), String.valueOf(txt_senha.getPassword()));
-            if(contaModelo.getLogado()) {
-                this.setVisible(false);
-                Frm_Menu frm_menu = new Frm_Menu(this.conexao, contaModelo);
-            } else {
-                JOptionPane.showMessageDialog(this, "Usuario e/ou senha estÃ£o incorretos. Tente novamente");
-            }
-        }
-    }
     // End of variables declaration//GEN-END:variables
 }
