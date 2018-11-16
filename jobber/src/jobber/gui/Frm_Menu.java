@@ -31,7 +31,24 @@ public class Frm_Menu extends javax.swing.JFrame {
     }
     
     private void gerarTipo(Conta conta){
-        
+        if(conta.getTipo()==0){
+            lbl_tipo.setText("Trabalhador");
+        } else if(conta.getTipo()==1){
+            lbl_tipo.setText("Cliente");
+        }
+    }
+    
+    private void disablePanel(){
+        if(lbl_tipo.getText().equals("Cliente")){
+            panel_trabalhador.setEnabled(false);
+            btn_combinandoTrab.setEnabled(false);
+            btn_gerenciarTrab.setEnabled(false);
+        } else{
+            panel_cliente.setEnabled(false);
+            btn_buscar.setEnabled(false);
+            btn_combinandoCli.setEnabled(false);
+            btn_finalizados.setEnabled(false);
+        }
     }
 
     public Frm_Menu(Conexao conexao, Conta conta) {
@@ -41,6 +58,8 @@ public class Frm_Menu extends javax.swing.JFrame {
         init(); 
         lbl_nome.setText(conta.getNome());
         lbl_email2.setText(conta.getEmail());
+        gerarTipo(conta);
+        disablePanel();
     }
 
     private void init(){
@@ -140,12 +159,15 @@ public class Frm_Menu extends javax.swing.JFrame {
 
         panel_info.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("Tipo:");
         panel_info.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Nome:");
         panel_info.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, -1, -1));
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setText("Email:");
         panel_info.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
         panel_info.add(lbl_tipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 140, 20));
