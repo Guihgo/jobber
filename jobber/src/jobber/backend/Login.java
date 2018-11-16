@@ -8,19 +8,19 @@ import java.sql.Statement;
 
 public class Login extends Conexao{
 
-    Connection conn;
+    private Conexao conexao;
     PreparedStatement ps = null;
     Statement stmt = null;
     ResultSet rs = null;
 
-    public Login(Connection connection){
-        this.conn = connection;
+    public Login(Conexao conexao){
+        this.conexao = conexao;
     }
 
     public jobber.modelo.Conta tenta(String email, String password){
         jobber.modelo.Conta conta = new jobber.modelo.Conta();
         try {
-            ps = this.conn.prepareStatement("SELECT * FROM conta WHERE conta_email=? AND conta_senha=? LIMIT 1");
+            ps = this.conexao.getConnection().prepareStatement("SELECT * FROM conta WHERE conta_email=? AND conta_senha=? LIMIT 1");
             ps.setString(1, email);
             ps.setString(2, password);
             rs = ps.executeQuery();
