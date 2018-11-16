@@ -6,6 +6,7 @@
 package jobber.gui.trabalhador;
 
 import javax.swing.JOptionPane;
+import jobber.backend.Conexao;
 import jobber.gui.cliente.*;
 
 /**
@@ -14,10 +15,19 @@ import jobber.gui.cliente.*;
  */
 public class IFrm_GerenciarTrab extends javax.swing.JInternalFrame {
 
+    Conexao conexao = null;
+    jobber.modelo.Conta conta = null;
     /**
      * Creates new form IFrm_Combinando
      */
     public IFrm_GerenciarTrab() {
+        initComponents();
+    }
+    
+
+    public IFrm_GerenciarTrab(Conexao conexao, jobber.modelo.Conta conta) {
+        this.conexao = conexao;
+        this.conta = conta;
         initComponents();
     }
 
@@ -131,7 +141,13 @@ public class IFrm_GerenciarTrab extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_feedbacksActionPerformed
 
     private void btn_adicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_adicionarActionPerformed
-        // TODO add your handling code here:
+        IFrm_AdicionarTrab tela = new IFrm_AdicionarTrab(conexao, conta);        
+        getParent().add(tela);
+        int x = (getParent().getWidth()/2) - tela.getWidth()/2;
+        int y = (getParent().getHeight()/2) - tela.getHeight()/2;
+        tela.setLocation(x, y);
+        tela.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btn_adicionarActionPerformed
 
     private void btn_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_excluirActionPerformed

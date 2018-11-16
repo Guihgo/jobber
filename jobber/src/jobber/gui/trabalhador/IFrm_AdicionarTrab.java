@@ -5,18 +5,32 @@
  */
 package jobber.gui.trabalhador;
 
+import javax.swing.JOptionPane;
+import jobber.backend.Conexao;
+import jobber.backend.trabalhador.GerenciarTrabalho;
 import jobber.gui.cliente.*;
+import jobber.modelo.Trabalho;
 
 /**
  *
  * @author rfutenma
  */
 public class IFrm_AdicionarTrab extends javax.swing.JInternalFrame {
+    
+    
+    Conexao conexao = null;
+    jobber.modelo.Conta conta = null;
 
     /**
      * Creates new form IFrm_Combinando
      */
     public IFrm_AdicionarTrab() {
+        initComponents();
+    }
+    
+    public IFrm_AdicionarTrab(Conexao conexao, jobber.modelo.Conta conta){
+        this.conexao = conexao;
+        this.conta = conta;
         initComponents();
     }
 
@@ -82,7 +96,18 @@ public class IFrm_AdicionarTrab extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
-        // TODO add your handling code here:
+        
+        jobber.backend.trabalhador.GerenciarTrabalho gerenciarTrabBackend = new GerenciarTrabalho(conexao);
+        Trabalho trabalho = new Trabalho();
+        trabalho.setNome(txt_nome.getText());
+        trabalho.setDescricao(txt_desc.getText());
+        if(gerenciarTrabBackend.adicionar(trabalho, conta)){
+            JOptionPane.showMessageDialog(null, "Adicionado com sucesso!");
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro!");
+        }      
+        
     }//GEN-LAST:event_btn_addActionPerformed
 
     private void btn_voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_voltarActionPerformed

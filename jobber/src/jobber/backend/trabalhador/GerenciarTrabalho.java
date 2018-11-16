@@ -47,8 +47,22 @@ public class GerenciarTrabalho extends Conexao{
         return null;
     }
 
-    public void adicionar() {
-
+    public boolean adicionar(Trabalho trabalho, jobber.modelo.Conta conta) {
+        boolean adicionouComSucesso = false;
+        try {
+            ps = this.conexao.getConnection().prepareStatement("INSERT INTO trabalho(trabalho_nome,trabalho_descricao,conta_id) VALUES (?,?,?)");
+            ps.setString(1, trabalho.getNome());
+            ps.setString(2, trabalho.getDescricao());
+            ps.setInt(3, conta.getId());
+            if(ps.executeUpdate() > 0){
+                adicionouComSucesso =true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            System.out.println("Adicionado com sucesso");
+            return adicionouComSucesso;
+        }
     }
 
     public void editar() {
