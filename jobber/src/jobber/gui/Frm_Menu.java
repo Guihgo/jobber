@@ -29,16 +29,21 @@ public class Frm_Menu extends javax.swing.JFrame {
     public Frm_Menu() {
         initComponents();
     }
+    
+    private void gerarTipo(Conta conta){
+        
+    }
 
     public Frm_Menu(Conexao conexao, Conta conta) {
         this.conexao = conexao;
         this.conta = conta;
         initComponents();
-        init();
+        init(); 
+        lbl_nome.setText(conta.getNome());
+        lbl_email2.setText(conta.getEmail());
     }
 
     private void init(){
-        JOptionPane.showMessageDialog(this, "A conta é do tipo: "+ conta.getTipo());
         this.setVisible(true);
     }
 

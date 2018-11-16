@@ -44,9 +44,9 @@ public class Frm_Login extends javax.swing.JFrame implements ActionListener{
         if(actionEvent.getSource()==btn_logar) {
             Login login = new Login(conexao.getConnection());
             jobber.modelo.Conta contaModelo = login.tenta(txt_usuario.getText(), String.valueOf(txt_senha.getPassword()));
-            if(contaModelo.getLogado()) {
-                this.setVisible(false);
+            if(contaModelo.getLogado()) {                
                 Frm_Menu frm_menu = new Frm_Menu(this.conexao, contaModelo);
+                this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Usuario e/ou senha estão incorretos. Tente novamente");
             }
