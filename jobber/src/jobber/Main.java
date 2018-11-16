@@ -9,7 +9,7 @@ import jobber.backend.Conexao;
 import jobber.gui.Frm_Login;
 
 /**
- * @author rfutenma
+ * @author rfutenma e Guihgo
  */
 
 public class Main {
