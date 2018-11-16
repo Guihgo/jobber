@@ -9,8 +9,6 @@ import jobber.backend.Conexao;
 import jobber.gui.Frm_Login;
 
 /**
- * teste
- * omneiasdiasjdi
  * @author rfutenma
  */
 
