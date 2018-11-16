@@ -174,11 +174,40 @@ public class IFrm_GerenciarTrab extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_adicionarActionPerformed
 
     private void btn_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_excluirActionPerformed
-        // TODO add your handling code here:
+        Trabalho trabalho = new Trabalho();
+        int r = JOptionPane.showConfirmDialog(null, "Deseja excluir esse trabalho?");
+        if (r == 0) {
+            int i, id;
+            i = tbl_trabalhos.getSelectedRow();
+            id = (int) tbl_trabalhos.getValueAt(i, 0);
+            jobber.backend.trabalhador.GerenciarTrabalho ger = new GerenciarTrabalho(conexao);
+            trabalho.setId(id);
+            if(ger.remover(trabalho)){
+                JOptionPane.showMessageDialog(null, "Removido com sucesso!");
+                init();
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro!");
+            }
+            
+        }
+        
     }//GEN-LAST:event_btn_excluirActionPerformed
 
     private void btn_editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editarActionPerformed
-        // TODO add your handling code here:
+        Trabalho trabalho = new Trabalho();
+        int i, id;
+        i = tbl_trabalhos.getSelectedRow();
+        id = (int) tbl_trabalhos.getValueAt(i, 0);        
+        jobber.backend.trabalhador.GerenciarTrabalho ger = new GerenciarTrabalho(conexao);
+        trabalho.setId(id);
+        trabalho = ger.consultar(trabalho);
+        IFrm_EditarTrab tela = new IFrm_EditarTrab(conexao, conta, trabalho);        
+        getParent().add(tela);
+        int x = (getParent().getWidth()/2) - tela.getWidth()/2;
+        int y = (getParent().getHeight()/2) - tela.getHeight()/2;
+        tela.setLocation(x, y);
+        tela.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btn_editarActionPerformed
 
 

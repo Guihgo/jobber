@@ -5,7 +5,11 @@
  */
 package jobber.gui.trabalhador;
 
+import javax.swing.JOptionPane;
+import jobber.backend.Conexao;
+import jobber.backend.trabalhador.GerenciarTrabalho;
 import jobber.gui.cliente.*;
+import jobber.modelo.Trabalho;
 
 /**
  *
@@ -13,11 +17,31 @@ import jobber.gui.cliente.*;
  */
 public class IFrm_EditarTrab extends javax.swing.JInternalFrame {
 
+    Conexao conexao = null;
+    jobber.modelo.Conta conta = null;
+    Trabalho trabalho = null;
     /**
      * Creates new form IFrm_Combinando
      */
     public IFrm_EditarTrab() {
         initComponents();
+    }
+    
+    public IFrm_EditarTrab(Conexao conexao, jobber.modelo.Conta conta, Trabalho trabalho){
+        this.conexao = conexao;
+        this.conta = conta;
+        this.trabalho = trabalho;
+        initComponents();
+        init();
+    }
+    
+    private void init(){
+        txt_id.setText(trabalho.getId()+"");
+        txt_nome.setText(trabalho.getNome());
+        txt_desc.setText(trabalho.getDescricao());
+        float media = (trabalho.getQntDeFeedback()==0)? 0:(trabalho.getSomaNotaDeFeedback()/trabalho.getQntDeFeedback());
+        txt_notamedia.setText(media+"");
+        txt_qtdfeedbacks.setText(trabalho.getQntDeFeedback()+"");
     }
 
     /**
@@ -36,7 +60,7 @@ public class IFrm_EditarTrab extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txt_desc = new javax.swing.JTextArea();
-        btn_add = new javax.swing.JButton();
+        btn_alterar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         txt_id = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -76,13 +100,13 @@ public class IFrm_EditarTrab extends javax.swing.JInternalFrame {
 
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 330, -1));
 
-        btn_add.setText("Alterar");
-        btn_add.addActionListener(new java.awt.event.ActionListener() {
+        btn_alterar.setText("Alterar");
+        btn_alterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_addActionPerformed(evt);
+                btn_alterarActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_add, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 60, -1, -1));
+        getContentPane().add(btn_alterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 60, -1, -1));
 
         jLabel4.setText("id:");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, -1));
@@ -105,13 +129,33 @@ public class IFrm_EditarTrab extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_addActionPerformed
+    private void btn_alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_alterarActionPerformed
+        Trabalho trab = new Trabalho();
+        trab.setNome(txt_nome.getText());
+        trab.setId(Integer.parseInt(txt_id.getText()));
+        trab.setDescricao(txt_desc.getText());
+        int r = JOptionPane.showConfirmDialog(null, "Deseja alterar esse trabalho?");
+        if (r == 0) {            
+            jobber.backend.trabalhador.GerenciarTrabalho ger = new GerenciarTrabalho(conexao);            
+            if(ger.editar(trab)){
+                JOptionPane.showMessageDialog(null, "Editado com sucesso!");
+                this.trabalho = ger.consultar(trab);
+                IFrm_EditarTrab tela = new IFrm_EditarTrab(conexao, conta, trabalho);        
+                getParent().add(tela);
+                int x = (getParent().getWidth()/2) - tela.getWidth()/2;
+                int y = (getParent().getHeight()/2) - tela.getHeight()/2;
+                tela.setLocation(x, y);
+                tela.setVisible(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro!");
+            }
+            
+        }
+    }//GEN-LAST:event_btn_alterarActionPerformed
 
     private void btn_voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_voltarActionPerformed
-        IFrm_GerenciarTrab tela = new IFrm_GerenciarTrab();
-        
+        IFrm_GerenciarTrab tela = new IFrm_GerenciarTrab(conexao, conta);        
         getParent().add(tela);
         int x = (getParent().getWidth()/2) - tela.getWidth()/2;
         int y = (getParent().getHeight()/2) - tela.getHeight()/2;
@@ -122,7 +166,7 @@ public class IFrm_EditarTrab extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_add;
+    private javax.swing.JButton btn_alterar;
     private javax.swing.JButton btn_voltar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -5,6 +5,7 @@
  */
 package jobber.gui;
 
+import java.awt.Color;
 import javax.swing.JOptionPane;
 
 import jobber.backend.Conexao;
@@ -118,6 +119,11 @@ public class Frm_Menu extends javax.swing.JFrame {
         panel_cliente.add(btn_combinandoCli, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 130, -1));
 
         btn_finalizados.setText("Finalizados");
+        btn_finalizados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_finalizadosActionPerformed(evt);
+            }
+        });
         panel_cliente.add(btn_finalizados, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 130, -1));
 
         getContentPane().add(panel_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 160, 190));
@@ -170,9 +176,15 @@ public class Frm_Menu extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setText("Email:");
         panel_info.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
-        panel_info.add(lbl_tipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 140, 20));
-        panel_info.add(lbl_nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 140, 20));
-        panel_info.add(lbl_email2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 140, 20));
+
+        lbl_tipo.setForeground(new java.awt.Color(153, 153, 153));
+        panel_info.add(lbl_tipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 140, 20));
+
+        lbl_nome.setForeground(new java.awt.Color(153, 153, 153));
+        panel_info.add(lbl_nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 140, 20));
+
+        lbl_email2.setForeground(new java.awt.Color(153, 153, 153));
+        panel_info.add(lbl_email2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 140, 20));
 
         getContentPane().add(panel_info, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 160, 140));
 
@@ -181,6 +193,8 @@ public class Frm_Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
+        Desktop.removeAll();
+        Desktop.repaint();
         IFrm_BuscarTrab frm = new IFrm_BuscarTrab();
         Desktop.add(frm);
         int x = (Desktop.getWidth()/2) - frm.getWidth()/2;
@@ -190,6 +204,8 @@ public class Frm_Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_buscarActionPerformed
 
     private void btn_gerenciarTrabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_gerenciarTrabActionPerformed
+        Desktop.removeAll();
+        Desktop.repaint();
         IFrm_GerenciarTrab frm = new IFrm_GerenciarTrab(conexao,conta);
         Desktop.add(frm);
         int x = (Desktop.getWidth()/2) - frm.getWidth()/2;
@@ -199,10 +215,13 @@ public class Frm_Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_gerenciarTrabActionPerformed
 
     private void btn_combinandoCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_combinandoCliActionPerformed
-                       
+        Desktop.removeAll();
+        Desktop.repaint();
     }//GEN-LAST:event_btn_combinandoCliActionPerformed
 
     private void btn_combinandoTrabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_combinandoTrabActionPerformed
+        Desktop.removeAll();
+        Desktop.repaint();
         IFrm_CombinandoTrab frm = new IFrm_CombinandoTrab();
         Desktop.add(frm);
         int x = (Desktop.getWidth()/2) - frm.getWidth()/2;
@@ -210,6 +229,11 @@ public class Frm_Menu extends javax.swing.JFrame {
         frm.setLocation(x, y);
         frm.show();
     }//GEN-LAST:event_btn_combinandoTrabActionPerformed
+
+    private void btn_finalizadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_finalizadosActionPerformed
+        Desktop.removeAll();
+        Desktop.repaint();
+    }//GEN-LAST:event_btn_finalizadosActionPerformed
 
     /**
      * @param args the command line arguments

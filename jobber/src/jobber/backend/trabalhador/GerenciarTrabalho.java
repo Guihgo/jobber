@@ -90,15 +90,40 @@ public class GerenciarTrabalho extends Conexao{
             ps = this.conexao.getConnection().prepareStatement("UPDATE trabalho SET trabalho_nome = ? , trabalho_descricao=?  WHERE trabalho_id = ?");
             ps.setString(1, trabalho.getNome());
             ps.setString(2, trabalho.getDescricao());
-            ps.setInt(1, trabalho.getId());
+            ps.setInt(3, trabalho.getId());
             if(ps.executeUpdate() > 0){
                 editouComSucesso =true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            System.out.println("Removido com sucesso");
+            System.out.println("Editado com sucesso");
             return editouComSucesso;
+        }
+    }
+    
+    public Trabalho consultar(Trabalho trabalho){
+        jobber.modelo.Trabalho trab = new Trabalho();
+        try {
+            ps = this.conexao.getConnection().prepareStatement("SELECT * FROM trabalho WHERE trabalho_id=? LIMIT 1");
+            ps.setInt(1, trabalho.getId());
+            rs = ps.executeQuery();
+            if(rs.last()) {
+                trab.setNome(rs.getString("trabalho_nome"));
+                trab.setDescricao(rs.getString("trabalho_descricao"));
+                trab.setId(rs.getInt("trabalho_id"));
+                trab.setQntDeFeedback(rs.getInt("trabalho_qntNotaDeFeedback"));
+                trab.setSomaNotaDeFeedback(rs.getFloat("trabalho_somaNotaDeFeedback"));
+                trab.setContaId(rs.getInt("conta_id"));
+                System.out.println("Sucesso na Consulta");
+            } else {
+                System.out.println("Falha na Consulta");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeStatement(stmt, rs);
+            return trab;
         }
     }
     

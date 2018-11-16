@@ -99,19 +99,30 @@ public class IFrm_AdicionarTrab extends javax.swing.JInternalFrame {
         
         jobber.backend.trabalhador.GerenciarTrabalho gerenciarTrabBackend = new GerenciarTrabalho(conexao);
         Trabalho trabalho = new Trabalho();
-        trabalho.setNome(txt_nome.getText());
-        trabalho.setDescricao(txt_desc.getText());
-        if(gerenciarTrabBackend.adicionar(trabalho, conta)){
-            JOptionPane.showMessageDialog(null, "Adicionado com sucesso!");
-            this.dispose();
-        } else {
+        if((txt_nome.getText().replace(" ", "").equals(""))||(txt_desc.getText().replace(" ", "").equals(""))){
+            JOptionPane.showMessageDialog(null, "Digite um nome e descricao válidos");            
+        }else{
+            trabalho.setNome(txt_nome.getText());
+            trabalho.setDescricao(txt_desc.getText());
+            if(gerenciarTrabBackend.adicionar(trabalho, conta)){
+                JOptionPane.showMessageDialog(null, "Adicionado com sucesso!");
+                IFrm_GerenciarTrab tela = new IFrm_GerenciarTrab(conexao, conta);        
+                getParent().add(tela);
+                int x = (getParent().getWidth()/2) - tela.getWidth()/2;
+                int y = (getParent().getHeight()/2) - tela.getHeight()/2;
+                tela.setLocation(x, y);
+                tela.setVisible(true);
+                this.dispose();
+            } else {
             JOptionPane.showMessageDialog(null, "Erro!");
-        }      
+            }   
+        }
+              
         
     }//GEN-LAST:event_btn_addActionPerformed
 
     private void btn_voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_voltarActionPerformed
-        IFrm_AdicionarTrab tela = new IFrm_AdicionarTrab();        
+        IFrm_GerenciarTrab tela = new IFrm_GerenciarTrab(conexao, conta);        
         getParent().add(tela);
         int x = (getParent().getWidth()/2) - tela.getWidth()/2;
         int y = (getParent().getHeight()/2) - tela.getHeight()/2;

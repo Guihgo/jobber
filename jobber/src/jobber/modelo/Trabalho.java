@@ -7,7 +7,6 @@ public class Trabalho {
     private int qntDeFeedback;
     private float somaNotaDeFeedback;
     private int contaId;
-
     private int id;
 
     public int getId() {
