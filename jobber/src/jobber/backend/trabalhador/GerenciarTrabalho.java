@@ -65,8 +65,40 @@ public class GerenciarTrabalho extends Conexao{
             return adicionouComSucesso;
         }
     }
-
-    public void editar() {
-
+    
+    
+    public boolean remover(Trabalho trabalho){
+        boolean removeuComSucesso = false;
+        try {
+            ps = this.conexao.getConnection().prepareStatement("DELETE FROM trabalho WHERE trabalho_id = ?");
+            ps.setInt(1, trabalho.getId());
+            if(ps.executeUpdate() > 0){
+                removeuComSucesso =true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            System.out.println("Removido com sucesso");
+            return removeuComSucesso;
+        }
     }
+
+    public boolean editar(Trabalho trabalho) {
+        boolean editouComSucesso = false;
+        try {
+            ps = this.conexao.getConnection().prepareStatement("UPDATE trabalho SET trabalho_nome = ? , trabalho_descricao=?  WHERE trabalho_id = ?");
+            ps.setString(1, trabalho.getNome());
+            ps.setString(2, trabalho.getDescricao());
+            ps.setInt(1, trabalho.getId());
+            if(ps.executeUpdate() > 0){
+                editouComSucesso =true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            System.out.println("Removido com sucesso");
+            return editouComSucesso;
+        }
+    }
+    
 }
