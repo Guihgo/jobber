@@ -6,9 +6,12 @@
 package jobber.gui;
 
 import javax.swing.JOptionPane;
-import jobber.gui.cliente.IFrm_Combinando;
 
 import jobber.backend.Conexao;
+
+import jobber.gui.cliente.IFrm_BuscarTrab;
+import jobber.gui.trabalhador.IFrm_CombinandoTrab;
+import jobber.gui.trabalhador.IFrm_GerenciarTrab;
 import jobber.modelo.Conta;
 
 /**
@@ -51,12 +54,11 @@ public class Frm_Menu extends javax.swing.JFrame {
         panel_cliente = new javax.swing.JPanel();
         btn_buscar = new javax.swing.JButton();
         btn_combinandoCli = new javax.swing.JButton();
-        btn_configCli = new javax.swing.JButton();
+        btn_finalizados = new javax.swing.JButton();
         Desktop = new javax.swing.JDesktopPane();
         panel_trabalhador = new javax.swing.JPanel();
         btn_gerenciarTrab = new javax.swing.JButton();
         btn_combinandoTrab = new javax.swing.JButton();
-        btn_configTrab = new javax.swing.JButton();
         panel_info = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -66,9 +68,9 @@ public class Frm_Menu extends javax.swing.JFrame {
         lbl_email2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(800, 600));
-        setMinimumSize(new java.awt.Dimension(800, 600));
-        setPreferredSize(new java.awt.Dimension(800, 600));
+        setMaximumSize(new java.awt.Dimension(900, 600));
+        setMinimumSize(new java.awt.Dimension(900, 600));
+        setPreferredSize(new java.awt.Dimension(900, 600));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -81,7 +83,7 @@ public class Frm_Menu extends javax.swing.JFrame {
                 btn_buscarActionPerformed(evt);
             }
         });
-        panel_cliente.add(btn_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 130, -1));
+        panel_cliente.add(btn_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 130, -1));
 
         btn_combinandoCli.setText("Combinando");
         btn_combinandoCli.addActionListener(new java.awt.event.ActionListener() {
@@ -89,26 +91,26 @@ public class Frm_Menu extends javax.swing.JFrame {
                 btn_combinandoCliActionPerformed(evt);
             }
         });
-        panel_cliente.add(btn_combinandoCli, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 130, -1));
+        panel_cliente.add(btn_combinandoCli, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 130, -1));
 
-        btn_configCli.setText("Configurações");
-        panel_cliente.add(btn_configCli, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 130, -1));
+        btn_finalizados.setText("Finalizados");
+        panel_cliente.add(btn_finalizados, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 130, -1));
 
-        getContentPane().add(panel_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 160, 160));
+        getContentPane().add(panel_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 160, 190));
         panel_cliente.getAccessibleContext().setAccessibleName("");
 
         javax.swing.GroupLayout DesktopLayout = new javax.swing.GroupLayout(Desktop);
         Desktop.setLayout(DesktopLayout);
         DesktopLayout.setHorizontalGroup(
             DesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 580, Short.MAX_VALUE)
+            .addGap(0, 680, Short.MAX_VALUE)
         );
         DesktopLayout.setVerticalGroup(
             DesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 520, Short.MAX_VALUE)
         );
 
-        getContentPane().add(Desktop, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 30, 580, 520));
+        getContentPane().add(Desktop, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 30, 680, 520));
 
         panel_trabalhador.setBorder(javax.swing.BorderFactory.createTitledBorder("Trabalhador"));
         panel_trabalhador.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -122,12 +124,14 @@ public class Frm_Menu extends javax.swing.JFrame {
         panel_trabalhador.add(btn_gerenciarTrab, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 130, -1));
 
         btn_combinandoTrab.setText("Combinando");
-        panel_trabalhador.add(btn_combinandoTrab, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 130, -1));
+        btn_combinandoTrab.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_combinandoTrabActionPerformed(evt);
+            }
+        });
+        panel_trabalhador.add(btn_combinandoTrab, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 130, -1));
 
-        btn_configTrab.setText("Configurações");
-        panel_trabalhador.add(btn_configTrab, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 130, -1));
-
-        getContentPane().add(panel_trabalhador, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 160, 160));
+        getContentPane().add(panel_trabalhador, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, 160, 130));
 
         panel_info.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -150,21 +154,35 @@ public class Frm_Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
-    JOptionPane.showMessageDialog(null, "Ola");
-    }//GEN-LAST:event_btn_buscarActionPerformed
-
-    private void btn_gerenciarTrabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_gerenciarTrabActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_gerenciarTrabActionPerformed
-
-    private void btn_combinandoCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_combinandoCliActionPerformed
-        IFrm_Combinando frm = new IFrm_Combinando();
+        IFrm_BuscarTrab frm = new IFrm_BuscarTrab();
         Desktop.add(frm);
         int x = (Desktop.getWidth()/2) - frm.getWidth()/2;
         int y = (Desktop.getHeight()/2) - frm.getHeight()/2;
         frm.setLocation(x, y);
-        frm.show();                
+        frm.show(); 
+    }//GEN-LAST:event_btn_buscarActionPerformed
+
+    private void btn_gerenciarTrabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_gerenciarTrabActionPerformed
+        IFrm_GerenciarTrab frm = new IFrm_GerenciarTrab();
+        Desktop.add(frm);
+        int x = (Desktop.getWidth()/2) - frm.getWidth()/2;
+        int y = (Desktop.getHeight()/2) - frm.getHeight()/2;
+        frm.setLocation(x, y);
+        frm.show(); 
+    }//GEN-LAST:event_btn_gerenciarTrabActionPerformed
+
+    private void btn_combinandoCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_combinandoCliActionPerformed
+                       
     }//GEN-LAST:event_btn_combinandoCliActionPerformed
+
+    private void btn_combinandoTrabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_combinandoTrabActionPerformed
+        IFrm_CombinandoTrab frm = new IFrm_CombinandoTrab();
+        Desktop.add(frm);
+        int x = (Desktop.getWidth()/2) - frm.getWidth()/2;
+        int y = (Desktop.getHeight()/2) - frm.getHeight()/2;
+        frm.setLocation(x, y);
+        frm.show();
+    }//GEN-LAST:event_btn_combinandoTrabActionPerformed
 
     /**
      * @param args the command line arguments
@@ -206,8 +224,7 @@ public class Frm_Menu extends javax.swing.JFrame {
     private javax.swing.JButton btn_buscar;
     private javax.swing.JButton btn_combinandoCli;
     private javax.swing.JButton btn_combinandoTrab;
-    private javax.swing.JButton btn_configCli;
-    private javax.swing.JButton btn_configTrab;
+    private javax.swing.JButton btn_finalizados;
     private javax.swing.JButton btn_gerenciarTrab;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

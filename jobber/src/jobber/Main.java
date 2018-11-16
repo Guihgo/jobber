@@ -5,8 +5,6 @@
  */
 package jobber;
 
-import java.util.Map;
-
 import jobber.backend.Conexao;
 import jobber.gui.Frm_Login;
 
