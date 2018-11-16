@@ -7,6 +7,7 @@ package jobber.gui.trabalhador;
 
 import javax.swing.JOptionPane;
 import jobber.backend.Conexao;
+import jobber.backend.trabalhador.GerenciarTrabalho;
 import jobber.gui.cliente.*;
 
 /**
@@ -29,6 +30,12 @@ public class IFrm_GerenciarTrab extends javax.swing.JInternalFrame {
         this.conexao = conexao;
         this.conta = conta;
         initComponents();
+        init();
+    }
+
+    public void init() {
+        GerenciarTrabalho gerenciarTrabalho = new GerenciarTrabalho(this.conexao);
+        gerenciarTrabalho.listar(this.conta);
     }
 
     /**

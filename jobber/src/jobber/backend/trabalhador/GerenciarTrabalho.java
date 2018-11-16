@@ -26,7 +26,8 @@ public class GerenciarTrabalho extends Conexao{
         ArrayList<Trabalho> trabalhos = new ArrayList<Trabalho>();
 
         try {
-            ps = this.conexao.getConnection().prepareStatement("SELECT trabalho.* FROM trabalho NATURAL JOIN conta;");
+            ps = this.conexao.getConnection().prepareStatement("SELECT trabalho.* FROM trabalho NATURAL JOIN conta WHERE conta.conta_id=?");
+            ps.setInt(1, conta.getId());
             rs = ps.executeQuery();
             showTableResultSet(rs);
             while(rs.next()) {
