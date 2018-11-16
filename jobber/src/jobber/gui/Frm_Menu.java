@@ -190,7 +190,7 @@ public class Frm_Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_buscarActionPerformed
 
     private void btn_gerenciarTrabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_gerenciarTrabActionPerformed
-        IFrm_GerenciarTrab frm = new IFrm_GerenciarTrab();
+        IFrm_GerenciarTrab frm = new IFrm_GerenciarTrab(conexao,conta);
         Desktop.add(frm);
         int x = (Desktop.getWidth()/2) - frm.getWidth()/2;
         int y = (Desktop.getHeight()/2) - frm.getHeight()/2;
