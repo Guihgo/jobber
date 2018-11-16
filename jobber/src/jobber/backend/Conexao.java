@@ -8,7 +8,7 @@ import java.sql.Statement;
 
 
 public class Conexao {
-    private static String url = "jdbc:mysql://us-cdbr-iron-east-01.cleardb.net/heroku_b0965c26597b33a?reconnect=true,autoReconnect=true";
+    private static String url = "jdbc:mysql://us-cdbr-iron-east-01.cleardb.net/heroku_b0965c26597b33a?autoReconnect=true";
     private static String user = "b8cad8e341f4a3";
     private static String password = System.getenv("HEROKU_DB_PASS");
     private static String fullUrlConnection = "mysql://b8cad8e341f4a3:2b01e897@us-cdbr-iron-east-01.cleardb.net/heroku_b0965c26597b33a?reconnect=true";
@@ -41,11 +41,21 @@ public class Conexao {
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
+            this.conecta(); //tenta conectar novamente
             return false;
         }
     }
 
     public Connection getConnection() {
+        try {
+            if(this.conn.isClosed()) {
+                System.out.println("Connection esta fechada... reconectando...");
+                this.conecta();
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao verificar se Connection esta closed");
+            e.printStackTrace();
+        }
         return this.conn;
     }
 

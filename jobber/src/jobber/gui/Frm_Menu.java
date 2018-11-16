@@ -5,11 +5,7 @@
  */
 package jobber.gui;
 
-import java.awt.Color;
-import javax.swing.JOptionPane;
-
 import jobber.backend.Conexao;
-
 import jobber.gui.cliente.IFrm_BuscarTrab;
 import jobber.gui.trabalhador.IFrm_CombinandoTrab;
 import jobber.gui.trabalhador.IFrm_GerenciarTrab;
@@ -30,41 +26,32 @@ public class Frm_Menu extends javax.swing.JFrame {
     public Frm_Menu() {
         initComponents();
     }
-    
-    private void gerarTipo(Conta conta){
-        if(conta.getTipo()==0){
-            lbl_tipo.setText("Trabalhador");
-        } else if(conta.getTipo()==1){
-            lbl_tipo.setText("Cliente");
-        }
-    }
-    
-    private void disablePanel(){
-        if(lbl_tipo.getText().equals("Cliente")){
-            panel_trabalhador.setEnabled(false);
-            btn_combinandoTrab.setEnabled(false);
-            btn_gerenciarTrab.setEnabled(false);
-        } else{
-            panel_cliente.setEnabled(false);
-            btn_buscar.setEnabled(false);
-            btn_combinandoCli.setEnabled(false);
-            btn_finalizados.setEnabled(false);
-        }
-    }
 
     public Frm_Menu(Conexao conexao, Conta conta) {
         this.conexao = conexao;
         this.conta = conta;
         initComponents();
-        init(); 
-        lbl_nome.setText(conta.getNome());
-        lbl_email2.setText(conta.getEmail());
-        gerarTipo(conta);
-        disablePanel();
+        init();
     }
 
     private void init(){
+        lbl_nome.setText(this.conta.getNome());
+        lbl_email2.setText(this.conta.getEmail());
+        gerarUIByContaTipo();
         this.setVisible(true);
+    }
+
+    private void gerarUIByContaTipo(){
+        if(this.conta.getTipo()==0) { //0=trabalhador
+            lbl_tipo.setText("Trabalhador");
+            panel_cliente.setVisible(false);
+            panel_trabalhador.setVisible(true);
+        }
+        if(this.conta.getTipo()==1){ //1=cliente
+            lbl_tipo.setText("Cliente");
+            panel_cliente.setVisible(true);
+            panel_trabalhador.setVisible(false);
+        }
     }
 
     /**
