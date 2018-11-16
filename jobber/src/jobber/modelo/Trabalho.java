@@ -5,7 +5,7 @@ public class Trabalho {
     private String nome;
     private String descricao;
     private int qntDeFeedback;
-    private int somoaNotaDeFeedback;
+    private float somaNotaDeFeedback;
     private int contaId;
 
     private int id;
@@ -42,12 +42,12 @@ public class Trabalho {
         this.qntDeFeedback = qntDeFeedback;
     }
 
-    public int getSomoaNotaDeFeedback() {
-        return somoaNotaDeFeedback;
+    public float getSomaNotaDeFeedback() {
+        return somaNotaDeFeedback;
     }
 
-    public void setSomoaNotaDeFeedback(int somoaNotaDeFeedback) {
-        this.somoaNotaDeFeedback = somoaNotaDeFeedback;
+    public void setSomaNotaDeFeedback(float somoaNotaDeFeedback) {
+        this.somaNotaDeFeedback = somoaNotaDeFeedback;
     }
 
     public int getContaId() {

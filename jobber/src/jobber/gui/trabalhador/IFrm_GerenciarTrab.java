@@ -5,10 +5,15 @@
  */
 package jobber.gui.trabalhador;
 
+import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 import jobber.backend.Conexao;
 import jobber.backend.trabalhador.GerenciarTrabalho;
 import jobber.gui.cliente.*;
+import jobber.modelo.Trabalho;
 
 /**
  *
@@ -35,7 +40,18 @@ public class IFrm_GerenciarTrab extends javax.swing.JInternalFrame {
 
     public void init() {
         GerenciarTrabalho gerenciarTrabalho = new GerenciarTrabalho(this.conexao);
-        gerenciarTrabalho.listar(this.conta);
+        ArrayList<Trabalho> trabalhos = gerenciarTrabalho.listar(this.conta);
+        DefaultTableModel dtm = (DefaultTableModel) tbl_trabalhos.getModel();
+
+        dtm.setNumRows(0);
+        for(Trabalho trabalho: trabalhos) {
+            float media = (trabalho.getQntDeFeedback()==0)? 0:(trabalho.getSomaNotaDeFeedback()/trabalho.getQntDeFeedback());
+            dtm.addRow(new Object[]{
+                    trabalho.getId(),
+                    trabalho.getNome(),
+                    media
+            });
+        }
     }
 
     /**

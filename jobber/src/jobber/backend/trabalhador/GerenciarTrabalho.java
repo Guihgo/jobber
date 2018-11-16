@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.swing.table.DefaultTableModel;
+
 import jobber.backend.Conexao;
 import jobber.modelo.Conta;
 import jobber.modelo.Trabalho;
@@ -29,16 +31,15 @@ public class GerenciarTrabalho extends Conexao{
             ps = this.conexao.getConnection().prepareStatement("SELECT trabalho.* FROM trabalho NATURAL JOIN conta WHERE conta.conta_id=?");
             ps.setInt(1, conta.getId());
             rs = ps.executeQuery();
-            showTableResultSet(rs);
             while(rs.next()) {
-
-                System.out.println("rs.getString(): "+rs.getString("trabalho_nome"));
-//                conta.setLogado(true);
-//                conta.setId(rs.getInt("conta_id"));
-//                conta.setEmail(rs.getString("conta_email"));
-//                conta.setNome(rs.getString("conta_nome"));
-//                conta.setTipo(rs.getInt("conta_tipo"));
-
+                Trabalho trabalho = new Trabalho();
+                trabalho.setId(rs.getInt("trabalho_id"));
+                trabalho.setContaId(conta.getId());
+                trabalho.setDescricao(rs.getString("trabalho_descricao"));
+                trabalho.setNome(rs.getString("trabalho_nome"));
+                trabalho.setSomaNotaDeFeedback(rs.getFloat("trabalho_somaNotaDeFeedback"));
+                trabalho.setQntDeFeedback(rs.getInt("trabalho_qntNotaDeFeedback"));
+                trabalhos.add(trabalho);
             }
         } catch (SQLException e) {
             e.printStackTrace();
