@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package jobber.backend.cliente;
+package jobber.backend;
 
 
 import java.sql.PreparedStatement;
@@ -20,14 +20,14 @@ import jobber.modelo.Trabalho;
  *
  * @author rfutenma
  */
-public class CombinandoCli extends Conexao{
+public class Combinando extends Conexao{
     
     private Conexao conexao;
     PreparedStatement ps = null;
     Statement stmt = null;
     ResultSet rs = null;
     
-    public CombinandoCli(Conexao conexao){
+    public Combinando(Conexao conexao){
         this.conexao = conexao;
     }
     
@@ -80,6 +80,30 @@ public class CombinandoCli extends Conexao{
                 processo.setId(rs.getInt("p.processo_id"));
                 processo.setNomeTrabalho(rs.getString("t.trabalho_nome"));
                 processo.setNomeTrabalhador(rs.getString("c.conta_nome"));
+                processo.setStatus(rs.getInt("p.processo_status"));
+                processos.add(processo);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeStatement(stmt, rs);
+            return processos;
+        }
+    }
+    
+    
+    public ArrayList<Processo >listaTrabCombinandoTrab(Conta conta){
+        ArrayList<Processo> processos = new ArrayList<Processo>();
+
+        try {
+            ps = this.conexao.getConnection().prepareStatement("SELECT*FROM processo p INNER JOIN conta c on p.conta_id = c.conta_id INNER JOIN trabalho t ON t.trabalho_id = p.trabalho_id WHERE t.conta_id=? AND p.processo_status between 1 and 5 order by p.processo_data DESC;");
+            ps.setInt(1, conta.getId());
+            rs = ps.executeQuery();
+            while(rs.next()) {
+                Processo processo = new Processo();
+                processo.setId(rs.getInt("p.processo_id"));
+                processo.setNomeTrabalho(rs.getString("t.trabalho_nome"));
+                processo.setNomeCliente(rs.getString("c.conta_nome"));
                 processo.setStatus(rs.getInt("p.processo_status"));
                 processos.add(processo);
             }

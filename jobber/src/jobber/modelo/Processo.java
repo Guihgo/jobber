@@ -12,6 +12,7 @@ public class Processo {
 	private int idTrab;
         private String nomeTrabalho;
         private String nomeTrabalhador;
+        private String nomeCliente;
 	
 	
 	
@@ -72,6 +73,15 @@ public class Processo {
     public void setNomeTrabalhador(String nomeTrabalhador) {
         this.nomeTrabalhador = nomeTrabalhador;
     }
+
+    public String getNomeCliente() {
+        return nomeCliente;
+    }
+
+    public void setNomeCliente(String nomeCliente) {
+        this.nomeCliente = nomeCliente;
+    }
+    
     
 	
 }

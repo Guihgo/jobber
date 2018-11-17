@@ -5,6 +5,14 @@
  */
 package jobber.gui.trabalhador;
 
+import jobber.gui.cliente.*;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import jobber.backend.Conexao;
+import jobber.backend.Combinando;
+import jobber.modelo.Conta;
+import jobber.modelo.Processo;
+import jobber.modelo.Trabalho;
 
 
 /**
@@ -12,12 +20,60 @@ package jobber.gui.trabalhador;
  * @author rfutenma
  */
 public class IFrm_CombinandoTrab extends javax.swing.JInternalFrame {
-
+    
+    Conexao conexao = null;
+    Conta conta = null;
+    ArrayList<Processo> processos;
     /**
      * Creates new form IFrm_Combinando
      */
     public IFrm_CombinandoTrab() {
         initComponents();
+    }
+    
+    public IFrm_CombinandoTrab(Conexao conexao, Conta conta){
+        this.conexao = conexao;
+        this.conta = conta;
+        initComponents();
+        init();
+    }
+    
+    private void init(){
+        Combinando cli = new Combinando(conexao);
+        this.processos = cli.listaTrabCombinandoTrab(conta);
+        DefaultTableModel dtm = (DefaultTableModel) tbl_combinando.getModel();
+        String status=null;
+        dtm.setNumRows(0);
+        for(Processo processo: this.processos) {
+            switch(processo.getStatus()){
+                        case 1:
+                            status = "Combinando";
+                        break;
+                        case 2:
+                            status = "Solicitado";
+                        break;
+                        case 3:
+                            status = "Confirmado";
+                        break;
+                        case 4: 
+                            status = "Recusado";
+                        break;
+                        case 5:
+                            status = "Avaliado";
+                        break;
+                        case 6:
+                            status = "Cancelado";
+                        break;
+                        
+                    }
+            dtm.addRow(new Object[]{
+                    processo.getId(),
+                    processo.getNomeTrabalho(),
+                    processo.getNomeCliente(),
+                    status
+                    
+            });
+        }
     }
 
     /**
@@ -32,6 +88,7 @@ public class IFrm_CombinandoTrab extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_combinando = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+        btn_combinar = new javax.swing.JButton();
 
         setClosable(true);
         setResizable(true);
@@ -44,21 +101,28 @@ public class IFrm_CombinandoTrab extends javax.swing.JInternalFrame {
         tbl_combinando.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         tbl_combinando.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Nome do trabalho", "Trabalhador", "Status"
+                "id", "Nome do trabalho", "Trabalhador", "Status"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -66,24 +130,54 @@ public class IFrm_CombinandoTrab extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tbl_combinando);
         if (tbl_combinando.getColumnModel().getColumnCount() > 0) {
-            tbl_combinando.getColumnModel().getColumn(0).setResizable(false);
-            tbl_combinando.getColumnModel().getColumn(0).setPreferredWidth(250);
+            tbl_combinando.getColumnModel().getColumn(0).setMinWidth(0);
+            tbl_combinando.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tbl_combinando.getColumnModel().getColumn(0).setMaxWidth(0);
             tbl_combinando.getColumnModel().getColumn(1).setResizable(false);
-            tbl_combinando.getColumnModel().getColumn(1).setPreferredWidth(150);
+            tbl_combinando.getColumnModel().getColumn(1).setPreferredWidth(210);
             tbl_combinando.getColumnModel().getColumn(2).setResizable(false);
+            tbl_combinando.getColumnModel().getColumn(2).setPreferredWidth(110);
+            tbl_combinando.getColumnModel().getColumn(3).setResizable(false);
         }
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 440, 310));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 440, 270));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Combinando");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, -1, -1));
+
+        btn_combinar.setText("Combinar");
+        btn_combinar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_combinarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_combinar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 80, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btn_combinarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_combinarActionPerformed
+        Processo processo = new Processo();
+        int i, id;
+        i = tbl_combinando.getSelectedRow();
+        id = (int) tbl_combinando.getValueAt(i, 0);
+        processo.setId(id);
+        Combinando comb = new Combinando(conexao);
+        processo = comb.consultar(processo);
+        IFrm_ChatTrab tela = new IFrm_ChatTrab();
+        getParent().add(tela);
+        int x = (getParent().getWidth()/2) - tela.getWidth()/2;
+        int y = (getParent().getHeight()/2) - tela.getHeight()/2;
+        tela.setLocation(x, y);
+        tela.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_btn_combinarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_combinar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbl_combinando;

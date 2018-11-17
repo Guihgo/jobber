@@ -8,7 +8,7 @@ package jobber.gui.cliente;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import jobber.backend.Conexao;
-import jobber.backend.cliente.CombinandoCli;
+import jobber.backend.Combinando;
 import jobber.backend.trabalhador.GerenciarTrabalho;
 import jobber.gui.trabalhador.*;
 import jobber.modelo.Conta;
@@ -188,7 +188,7 @@ public class IFrm_Trabalho extends javax.swing.JInternalFrame {
 
     private void btn_combinarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_combinarActionPerformed
         Processo processo;
-        CombinandoCli comb = new CombinandoCli(conexao);
+        Combinando comb = new Combinando(conexao);
         processo = comb.criaProcesso(trabalho, conta);       
         IFrm_ChatCli tela= new IFrm_ChatCli(conexao, conta, processo);
         getParent().add(tela);

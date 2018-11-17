@@ -6,7 +6,7 @@
 package jobber.gui;
 
 import jobber.backend.Conexao;
-import jobber.backend.cliente.CombinandoCli;
+import jobber.backend.Combinando;
 import jobber.gui.cliente.IFrm_BuscarTrab;
 import jobber.gui.cliente.IFrm_CombinandoCli;
 import jobber.gui.trabalhador.IFrm_CombinandoTrab;
@@ -218,7 +218,7 @@ public class Frm_Menu extends javax.swing.JFrame {
     private void btn_combinandoTrabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_combinandoTrabActionPerformed
         Desktop.removeAll();
         Desktop.repaint();
-        IFrm_CombinandoTrab frm = new IFrm_CombinandoTrab();
+        IFrm_CombinandoTrab frm = new IFrm_CombinandoTrab(conexao, conta);
         Desktop.add(frm);
         int x = (Desktop.getWidth()/2) - frm.getWidth()/2;
         int y = (Desktop.getHeight()/2) - frm.getHeight()/2;
