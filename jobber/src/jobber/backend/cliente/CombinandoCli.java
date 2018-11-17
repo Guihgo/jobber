@@ -5,15 +5,15 @@
  */
 package jobber.backend.cliente;
 
-import java.sql.Date;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
+import java.util.ArrayList;
 import jobber.backend.Conexao;
 import jobber.modelo.Conta;
-import jobber.modelo.Processo1;
+import jobber.modelo.Processo;
 import jobber.modelo.Trabalho;
 
 /**
@@ -31,18 +31,19 @@ public class CombinandoCli extends Conexao{
         this.conexao = conexao;
     }
     
-    public Processo1 criaProcesso(Trabalho trabalho,Conta conta){
+    public Processo criaProcesso(Trabalho trabalho,Conta conta){
         
-        Processo1 processo = new Processo1();
+        Processo processo = new Processo();
         boolean adicionouComSucesso;
         try {
-            ps = this.conexao.getConnection().prepareStatement("INSERT INTO processo1 (processo_status,trabalho_id,conta_id) VALUES(1,?,?);");
+            
+            ps = this.conexao.getConnection().prepareStatement("INSERT INTO processo (processo_status,trabalho_id,conta_id) VALUES(1,?,?);");
             ps.setInt(1, trabalho.getId());
             ps.setInt(2, conta.getId());
             if(ps.executeUpdate() > 0){
-                System.out.println("PRocesso Criado");
+                System.out.println("Processo Criado");
             }
-            ps = this.conexao.getConnection().prepareStatement("SELECT*FROM PROCESSO1 WHERE conta_id=? ORDER BY processo_id desc limit 1;");
+            ps = this.conexao.getConnection().prepareStatement("SELECT*FROM processo WHERE conta_id=? ORDER BY processo_id desc limit 1;");
             ps.setInt(1, conta.getId());
             rs = ps.executeQuery();
             if(rs.last()) {
@@ -64,7 +65,54 @@ public class CombinandoCli extends Conexao{
             return processo;
         }
     }
-            
+    
+    
+    public ArrayList<Processo >listaTrabCombinandoCli(Conta conta){
+        ArrayList<Processo> processos = new ArrayList<Processo>();
+
+        try {
+            ps = this.conexao.getConnection().prepareStatement("SELECT * FROM processo p INNER JOIN trabalho t ON p.trabalho_id = t.trabalho_id INNER JOIN CONTA c ON t.conta_id = c.conta_id WHERE p.conta_id=?;");
+            ps.setInt(1, conta.getId());
+            rs = ps.executeQuery();
+            while(rs.next()) {
+                Processo processo = new Processo();
+                processo.setId(rs.getInt("p.processo_id"));
+                processo.setNomeTrabalho(rs.getString("t.trabalho_nome"));
+                processo.setNomeTrabalhador(rs.getString("c.conta_nome"));
+                processo.setStatus(rs.getInt("p.processo_status"));
+                processos.add(processo);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeStatement(stmt, rs);
+            return processos;
+        }
+    }
+      
+    
+    public Processo consultar(Processo processo){
+        try {
+            ps = this.conexao.getConnection().prepareStatement("SELECT * FROM processo p INNER JOIN trabalho t ON p.trabalho_id = t.trabalho_id INNER JOIN CONTA c ON t.conta_id = c.conta_id WHERE p.processo_id=? limit 1;");
+            ps.setInt(1, processo.getId());
+            rs = ps.executeQuery();
+            if(rs.last()) {
+                processo.setId(rs.getInt("p.processo_id"));
+                processo.setIdTrab(rs.getInt("p.trabalho_id"));
+                processo.setNomeTrabalho(rs.getString("t.trabalho_nome"));
+                processo.setNomeTrabalhador(rs.getString("c.conta_id"));
+                processo.setStatus(rs.getInt("p.processo_status"));
+                System.out.println("Sucesso na Consulta do processo");
+            } else {
+                System.out.println("Falha na Consulta do processo");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeStatement(stmt, rs);
+            return processo;
+        }
+    }
             
     
     

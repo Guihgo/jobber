@@ -11,7 +11,6 @@ import javax.swing.table.DefaultTableModel;
 
 import jobber.backend.Conexao;
 import jobber.backend.trabalhador.GerenciarTrabalho;
-import jobber.gui.cliente.*;
 import jobber.modelo.Conta;
 import jobber.modelo.Feedback;
 import jobber.modelo.Trabalho;

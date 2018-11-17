@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import jobber.backend.Conexao;
-import jobber.modelo.Conta;
 import jobber.modelo.Trabalho;
 
 /**

@@ -6,18 +6,14 @@
 package jobber.gui.cliente;
 
 import java.util.ArrayList;
-import javax.swing.table.DefaultTableModel;
+import java.util.Timer;
+import java.util.TimerTask;
+import javax.swing.JOptionPane;
 import jobber.backend.Conexao;
 import jobber.backend.cliente.ChatCli;
-import jobber.backend.trabalhador.GerenciarTrabalho;
-import jobber.gui.trabalhador.*;
-import jobber.gui.cliente.*;
 import jobber.modelo.Conta;
-import jobber.modelo.Feedback;
 import jobber.modelo.Mensagem;
-import jobber.modelo.Mensagem1;
-import jobber.modelo.Processo1;
-import jobber.modelo.Trabalho;
+import jobber.modelo.Processo;
 
 /**
  *
@@ -27,8 +23,8 @@ public class IFrm_ChatCli extends javax.swing.JInternalFrame {
 
     Conexao conexao;
     Conta conta;
-    Processo1 processo;
-    ArrayList<Mensagem1> mensagens;
+    Processo processo;
+    ArrayList<Mensagem> mensagens;
     /**
      * Creates new form IFrm_Combinando
      */
@@ -36,20 +32,52 @@ public class IFrm_ChatCli extends javax.swing.JInternalFrame {
         initComponents();
     }
     
-    public IFrm_ChatCli(Conexao conexao, Conta conta, Processo1 processo){
+    public IFrm_ChatCli(Conexao conexao, Conta conta, Processo processo){
         this.conexao = conexao;
         this.conta = conta;
         this.processo = processo;
         initComponents();
+        carregaHist();
+        atualiza();
+        verificaSolicitado();
     }
     
     private void carregaHist(){
         ChatCli chat = new ChatCli(this.conexao);
         mensagens = chat.gerarhistorico(this.processo);
         txt_historico.setText("");        
-        for(Mensagem1 mensagem: this.mensagens) { 
+        for(Mensagem mensagem: this.mensagens) { 
             txt_historico.append(mensagem.getAutor()+"   "+mensagem.getData()+":\n"+mensagem.getMsg()+"\n\n");
         }
+    }
+    
+    private void atualiza(){
+        long tempo = (1000 * 10);
+        Timer timer = null;
+		if (timer == null) {
+                    timer = new Timer();
+                    TimerTask tarefa = new TimerTask() {
+                            public void run() {
+                                    try {
+                                            System.out.println("Atualizou chat");
+                                            carregaHist();
+                                    } catch (Exception e) {
+                                            e.printStackTrace();
+                                    }
+                            }
+                    };
+                    timer.scheduleAtFixedRate(tarefa, tempo, tempo);
+            }
+            
+    }
+    
+    
+    
+    
+    
+    private void verificaSolicitado(){
+        if(processo.getStatus()>=2) btn_soliciar.setVisible(false);
+        else btn_soliciar.setVisible(true);
     }
 
     /**
@@ -83,12 +111,27 @@ public class IFrm_ChatCli extends javax.swing.JInternalFrame {
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
 
         btn_voltar.setText("< Trabalhos em combinação");
+        btn_voltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_voltarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btn_voltar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
 
         btn_soliciar.setText("Solicitar");
+        btn_soliciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_soliciarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btn_soliciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 60, -1, -1));
 
         btn_cancelar.setText("Cancelar");
+        btn_cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cancelarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btn_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 60, -1, -1));
         getContentPane().add(txt_mensagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, 350, -1));
 
@@ -117,8 +160,49 @@ public class IFrm_ChatCli extends javax.swing.JInternalFrame {
         if(chat.enviar(processo, msg.getMsg(), conta))         
         carregaHist();
         txt_mensagem.setText("");
-        
+        atualiza();
     }//GEN-LAST:event_btn_enviarActionPerformed
+
+    private void btn_soliciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_soliciarActionPerformed
+        ChatCli chat = new ChatCli(this.conexao);
+        int r = JOptionPane.showConfirmDialog(null, "Deseja Solicitar o trabalho?");
+        if(r == 0){
+            if(chat.solicita(this.processo)) System.out.println("Trabalho Solicitado");
+            else System.out.println("Erro ao solicitar");
+            verificaSolicitado();
+        }
+        
+        
+    }//GEN-LAST:event_btn_soliciarActionPerformed
+
+    private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
+        ChatCli chat = new ChatCli(this.conexao);
+        int r = JOptionPane.showConfirmDialog(null, "Deseja Cancelar o trabalho?");
+        if(r == 0){
+            if(chat.cancela(this.processo)) System.out.println("Trabalho Cancelado");
+            else System.out.println("Erro ao cancelar");
+            verificaSolicitado();
+            IFrm_BuscarTrab tela = new IFrm_BuscarTrab(conexao, conta);
+            getParent().add(tela);
+            int x = (getParent().getWidth()/2) - tela.getWidth()/2;
+            int y = (getParent().getHeight()/2) - tela.getHeight()/2;
+            tela.setLocation(x, y);
+            tela.setVisible(true);
+            
+            
+        }
+        
+    }//GEN-LAST:event_btn_cancelarActionPerformed
+
+    private void btn_voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_voltarActionPerformed
+        IFrm_CombinandoCli tela = new IFrm_CombinandoCli(conexao, conta);
+        getParent().add(tela);
+        int x = (getParent().getWidth()/2) - tela.getWidth()/2;
+        int y = (getParent().getHeight()/2) - tela.getHeight()/2;
+        tela.setLocation(x, y);
+        tela.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_voltarActionPerformed
 
     
 

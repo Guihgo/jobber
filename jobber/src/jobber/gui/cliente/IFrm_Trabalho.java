@@ -11,10 +11,9 @@ import jobber.backend.Conexao;
 import jobber.backend.cliente.CombinandoCli;
 import jobber.backend.trabalhador.GerenciarTrabalho;
 import jobber.gui.trabalhador.*;
-import jobber.gui.cliente.*;
 import jobber.modelo.Conta;
 import jobber.modelo.Feedback;
-import jobber.modelo.Processo1;
+import jobber.modelo.Processo;
 import jobber.modelo.Trabalho;
 
 /**
@@ -188,7 +187,7 @@ public class IFrm_Trabalho extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_combinarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_combinarActionPerformed
-        Processo1 processo;
+        Processo processo;
         CombinandoCli comb = new CombinandoCli(conexao);
         processo = comb.criaProcesso(trabalho, conta);       
         IFrm_ChatCli tela= new IFrm_ChatCli(conexao, conta, processo);

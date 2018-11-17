@@ -1,6 +1,5 @@
 package jobber.backend;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,6 +19,8 @@ public class Login extends Conexao{
     public jobber.modelo.Conta tenta(String email, String password){
         jobber.modelo.Conta conta = new jobber.modelo.Conta();
         try {
+            ps = this.conexao.getConnection().prepareStatement("SET auto_increment_increment=1;");
+            ps.executeUpdate();
             ps = this.conexao.getConnection().prepareStatement("SELECT * FROM conta WHERE conta_email=? AND conta_senha=? LIMIT 1");
             ps.setString(1, email);
             ps.setString(2, password);

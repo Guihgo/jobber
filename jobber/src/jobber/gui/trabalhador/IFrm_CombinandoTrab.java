@@ -5,7 +5,7 @@
  */
 package jobber.gui.trabalhador;
 
-import jobber.gui.cliente.*;
+
 
 /**
  *

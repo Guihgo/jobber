@@ -8,7 +8,6 @@ package jobber.gui.trabalhador;
 import javax.swing.JOptionPane;
 import jobber.backend.Conexao;
 import jobber.backend.trabalhador.GerenciarTrabalho;
-import jobber.gui.cliente.*;
 import jobber.modelo.Trabalho;
 
 /**

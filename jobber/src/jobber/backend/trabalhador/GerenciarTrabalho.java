@@ -1,14 +1,11 @@
 package jobber.backend.trabalhador;
 
-import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
-import javax.swing.table.DefaultTableModel;
-
 import jobber.backend.Conexao;
 import jobber.modelo.Conta;
 import jobber.modelo.Feedback;
@@ -53,6 +50,7 @@ public class GerenciarTrabalho extends Conexao{
     public boolean adicionar(Trabalho trabalho, jobber.modelo.Conta conta) {
         boolean adicionouComSucesso = false;
         try {
+            
             ps = this.conexao.getConnection().prepareStatement("INSERT INTO trabalho(trabalho_nome,trabalho_descricao,conta_id) VALUES (?,?,?)");
             ps.setString(1, trabalho.getNome());
             ps.setString(2, trabalho.getDescricao());
