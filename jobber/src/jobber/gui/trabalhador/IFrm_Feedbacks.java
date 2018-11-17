@@ -12,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
 import jobber.backend.Conexao;
 import jobber.backend.trabalhador.GerenciarTrabalho;
 import jobber.gui.cliente.*;
+import jobber.modelo.Conta;
 import jobber.modelo.Feedback;
 import jobber.modelo.Trabalho;
 
@@ -24,6 +25,7 @@ public class IFrm_Feedbacks extends javax.swing.JInternalFrame {
 
     Conexao conexao;
     Trabalho trabalho;
+    Conta conta;
     ArrayList<Feedback> feedbacks;
 
     /**
@@ -33,9 +35,10 @@ public class IFrm_Feedbacks extends javax.swing.JInternalFrame {
         initComponents();
     }
 
-    public IFrm_Feedbacks(Conexao conexao, Trabalho trabalho) {
+    public IFrm_Feedbacks(Conexao conexao, Trabalho trabalho, Conta conta) {
         this.conexao = conexao;
         this.trabalho = trabalho;
+        this.conta = conta;
         initComponents();
         init();
     }
@@ -45,7 +48,7 @@ public class IFrm_Feedbacks extends javax.swing.JInternalFrame {
         txt_nome.setEnabled(false);
         txt_id.setText(String.valueOf(this.trabalho.getId()));
         txt_notamedia.setText(String.valueOf( (this.trabalho.getSomaNotaDeFeedback()/this.trabalho.getQntDeFeedback()) ));
-
+        if(txt_notamedia.getText().equals("NaN")) txt_notamedia.setText(0+"");
         GerenciarTrabalho gerenciarTrabalho = new GerenciarTrabalho(this.conexao);
         feedbacks = gerenciarTrabalho.listaFeedbackByTrabalho(this.trabalho);
         DefaultTableModel dtm = (DefaultTableModel) tbl_feedbacks.getModel();
@@ -100,7 +103,7 @@ public class IFrm_Feedbacks extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Nome do trabalho:");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 110, -1, -1));
-        getContentPane().add(txt_nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, 250, 30));
+        getContentPane().add(txt_nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, 250, 20));
 
         jLabel4.setText("id:");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, -1));
@@ -146,7 +149,13 @@ public class IFrm_Feedbacks extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_voltarActionPerformed
-        this.dispose(); //TODO
+        IFrm_GerenciarTrab tela = new IFrm_GerenciarTrab(conexao, conta);        
+        getParent().add(tela);
+        int x = (getParent().getWidth()/2) - tela.getWidth()/2;
+        int y = (getParent().getHeight()/2) - tela.getHeight()/2;
+        tela.setLocation(x, y);
+        tela.setVisible(true);
+        this.dispose();  
     }//GEN-LAST:event_btn_voltarActionPerformed
 
 

@@ -5,20 +5,62 @@
  */
 package jobber.gui.cliente;
 
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import jobber.backend.Conexao;
+import jobber.backend.cliente.CombinandoCli;
+import jobber.backend.trabalhador.GerenciarTrabalho;
 import jobber.gui.trabalhador.*;
 import jobber.gui.cliente.*;
+import jobber.modelo.Conta;
+import jobber.modelo.Feedback;
+import jobber.modelo.Processo1;
+import jobber.modelo.Trabalho;
 
 /**
  *
  * @author rfutenma
  */
 public class IFrm_Trabalho extends javax.swing.JInternalFrame {
-
+    
+    Conexao conexao;
+    Conta conta;
+    Trabalho trabalho;
+    ArrayList<Feedback> feedbacks;
     /**
      * Creates new form IFrm_Combinando
      */
     public IFrm_Trabalho() {
         initComponents();
+    }
+    
+    public IFrm_Trabalho(Conexao conexao, Conta conta, Trabalho trabalho){
+        this.conexao = conexao;
+        this.conta = conta;
+        this.trabalho = trabalho;
+        initComponents();
+        init();
+    }
+    
+    private void init(){
+        txt_id.setText(""+trabalho.getId());
+        txt_nome.setText(trabalho.getNome());
+        txt_desc.setText(trabalho.getDescricao());
+        txt_notamedia.setText(String.valueOf( (this.trabalho.getSomaNotaDeFeedback()/this.trabalho.getQntDeFeedback()) ));
+        if(txt_notamedia.getText().equals("NaN")) txt_notamedia.setText(0+"");
+        GerenciarTrabalho gerenciarTrabalho = new GerenciarTrabalho(this.conexao);
+        feedbacks = gerenciarTrabalho.listaFeedbackByTrabalho(this.trabalho);
+        DefaultTableModel dtm = (DefaultTableModel) tbl_comentarios.getModel();
+
+        dtm.setNumRows(0);
+        for(Feedback feedback: this.feedbacks) {
+
+            dtm.addRow(new Object[]{
+                    feedback.getComentario(),
+                    feedback.getNota(),
+            });
+        }
+        
     }
 
     /**
@@ -81,7 +123,7 @@ public class IFrm_Trabalho extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Nome do trabalho:");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, -1, -1));
-        getContentPane().add(txt_nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 110, 330, 30));
+        getContentPane().add(txt_nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 110, 330, 20));
 
         jLabel3.setText("Descrição:");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
@@ -146,7 +188,17 @@ public class IFrm_Trabalho extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_combinarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_combinarActionPerformed
-        // TODO add your handling code here:
+        Processo1 processo;
+        CombinandoCli comb = new CombinandoCli(conexao);
+        processo = comb.criaProcesso(trabalho, conta);       
+        IFrm_ChatCli tela= new IFrm_ChatCli(conexao, conta, processo);
+        getParent().add(tela);
+        int x = (getParent().getWidth()/2) - tela.getWidth()/2;
+        int y = (getParent().getHeight()/2) - tela.getHeight()/2;
+        tela.setLocation(x, y);
+        tela.setVisible(true);
+        this.dispose();
+        
     }//GEN-LAST:event_btn_combinarActionPerformed
 
     private void btn_voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_voltarActionPerformed

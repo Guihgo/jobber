@@ -5,18 +5,38 @@
  */
 package jobber.gui.cliente;
 
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import jobber.backend.Conexao;
+import jobber.backend.cliente.BuscarTrabalho;
+import jobber.backend.trabalhador.GerenciarTrabalho;
+import jobber.modelo.Conta;
+import jobber.modelo.Trabalho;
+
 /**
  *
  * @author rfutenma
  */
 public class IFrm_BuscarTrab extends javax.swing.JInternalFrame {
-
+    
+    Conexao conexao;
+    Conta conta;
+    
+    
     /**
      * Creates new form IFrm_Combinando
      */
     public IFrm_BuscarTrab() {
         initComponents();
     }
+    
+    public IFrm_BuscarTrab(Conexao conexao, Conta conta){
+        this.conexao = conexao;
+        this.conta = conta;
+        initComponents();
+        
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,6 +52,7 @@ public class IFrm_BuscarTrab extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_busca = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+        btn_selecionar = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Buscar Trabalho");
@@ -42,26 +63,38 @@ public class IFrm_BuscarTrab extends javax.swing.JInternalFrame {
         getContentPane().add(txt_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 340, -1));
 
         btn_buscar.setText("Buscar");
+        btn_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btn_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 70, -1, -1));
 
         tbl_busca.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         tbl_busca.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Nome do trabalho", "Nota"
+                "id", "Nome do trabalho", "Nota"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -69,23 +102,72 @@ public class IFrm_BuscarTrab extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tbl_busca);
         if (tbl_busca.getColumnModel().getColumnCount() > 0) {
-            tbl_busca.getColumnModel().getColumn(0).setResizable(false);
-            tbl_busca.getColumnModel().getColumn(0).setPreferredWidth(350);
+            tbl_busca.getColumnModel().getColumn(0).setMinWidth(0);
+            tbl_busca.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tbl_busca.getColumnModel().getColumn(0).setMaxWidth(0);
             tbl_busca.getColumnModel().getColumn(1).setResizable(false);
+            tbl_busca.getColumnModel().getColumn(1).setPreferredWidth(350);
+            tbl_busca.getColumnModel().getColumn(2).setResizable(false);
         }
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 440, 280));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 440, 230));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Buscar Trabalhos");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, -1, -1));
 
+        btn_selecionar.setText("Selecionar Trabalho");
+        btn_selecionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_selecionarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_selecionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 370, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
+        BuscarTrabalho buscar = new BuscarTrabalho(this.conexao);
+        ArrayList<Trabalho> trabalhos = buscar.listar(txt_buscar.getText());
+        DefaultTableModel dtm = (DefaultTableModel) tbl_busca.getModel();
+        
+        dtm.setNumRows(0);
+        for(Trabalho trabalho: trabalhos) {
+            float media = (trabalho.getQntDeFeedback()==0)? 0:(trabalho.getSomaNotaDeFeedback()/trabalho.getQntDeFeedback());
+            dtm.addRow(new Object[]{
+                    trabalho.getId(),
+                    trabalho.getNome(),
+                    media
+            });
+        }
+        
+        
+    }//GEN-LAST:event_btn_buscarActionPerformed
+
+    private void btn_selecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_selecionarActionPerformed
+        Trabalho trabalho = new Trabalho();
+        int i, id;
+        i = tbl_busca.getSelectedRow();
+        id = (int) tbl_busca.getValueAt(i, 0);
+        jobber.backend.trabalhador.GerenciarTrabalho gerTrab = new GerenciarTrabalho(conexao);
+        trabalho.setId(id);
+        trabalho = gerTrab.consultar(trabalho);
+        IFrm_Trabalho tela = new IFrm_Trabalho(conexao, conta, trabalho);
+        getParent().add(tela);
+        int x = (getParent().getWidth()/2) - tela.getWidth()/2;
+        int y = (getParent().getHeight()/2) - tela.getHeight()/2;
+        tela.setLocation(x, y);
+        tela.setVisible(true);
+        this.dispose();
+        
+        
+    }//GEN-LAST:event_btn_selecionarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_buscar;
+    private javax.swing.JButton btn_selecionar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbl_busca;

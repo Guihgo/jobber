@@ -182,7 +182,7 @@ public class Frm_Menu extends javax.swing.JFrame {
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
         Desktop.removeAll();
         Desktop.repaint();
-        IFrm_BuscarTrab frm = new IFrm_BuscarTrab();
+        IFrm_BuscarTrab frm = new IFrm_BuscarTrab(conexao, conta);
         Desktop.add(frm);
         int x = (Desktop.getWidth()/2) - frm.getWidth()/2;
         int y = (Desktop.getHeight()/2) - frm.getHeight()/2;

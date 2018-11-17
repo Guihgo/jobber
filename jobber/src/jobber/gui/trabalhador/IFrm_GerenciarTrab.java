@@ -163,7 +163,7 @@ public class IFrm_GerenciarTrab extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_feedbacksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_feedbacksActionPerformed
-        IFrm_Feedbacks iFrm_feedbacks = new IFrm_Feedbacks(this.conexao, this.trabalhos.get( tbl_trabalhos.getSelectedRow() ));
+        IFrm_Feedbacks iFrm_feedbacks = new IFrm_Feedbacks(this.conexao, this.trabalhos.get( tbl_trabalhos.getSelectedRow()), this.conta );
         getParent().add(iFrm_feedbacks);
         int x = (getParent().getWidth()/2) - iFrm_feedbacks.getWidth()/2;
         int y = (getParent().getHeight()/2) - iFrm_feedbacks.getHeight()/2;
