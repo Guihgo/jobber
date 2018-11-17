@@ -42,7 +42,7 @@ public class Frm_Login extends javax.swing.JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         if(actionEvent.getSource()==btn_logar) {
-            Login login = new Login(conexao);
+            Login login = new Login(this.conexao);
             jobber.modelo.Conta contaModelo = login.tenta(txt_usuario.getText(), String.valueOf(txt_senha.getPassword()));
             if(contaModelo.getLogado()) {                
                 Frm_Menu frm_menu = new Frm_Menu(this.conexao, contaModelo);

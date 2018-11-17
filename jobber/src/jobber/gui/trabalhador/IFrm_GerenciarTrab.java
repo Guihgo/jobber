@@ -23,6 +23,9 @@ public class IFrm_GerenciarTrab extends javax.swing.JInternalFrame {
 
     Conexao conexao = null;
     jobber.modelo.Conta conta = null;
+
+    ArrayList<Trabalho> trabalhos;
+
     /**
      * Creates new form IFrm_Combinando
      */
@@ -40,11 +43,11 @@ public class IFrm_GerenciarTrab extends javax.swing.JInternalFrame {
 
     public void init() {
         GerenciarTrabalho gerenciarTrabalho = new GerenciarTrabalho(this.conexao);
-        ArrayList<Trabalho> trabalhos = gerenciarTrabalho.listar(this.conta);
+        this.trabalhos = gerenciarTrabalho.listar(this.conta);
         DefaultTableModel dtm = (DefaultTableModel) tbl_trabalhos.getModel();
 
         dtm.setNumRows(0);
-        for(Trabalho trabalho: trabalhos) {
+        for(Trabalho trabalho: this.trabalhos) {
             float media = (trabalho.getQntDeFeedback()==0)? 0:(trabalho.getSomaNotaDeFeedback()/trabalho.getQntDeFeedback());
             dtm.addRow(new Object[]{
                     trabalho.getId(),
@@ -160,7 +163,13 @@ public class IFrm_GerenciarTrab extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_feedbacksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_feedbacksActionPerformed
-         
+        IFrm_Feedbacks iFrm_feedbacks = new IFrm_Feedbacks(this.conexao, this.trabalhos.get( tbl_trabalhos.getSelectedRow() ));
+        getParent().add(iFrm_feedbacks);
+        int x = (getParent().getWidth()/2) - iFrm_feedbacks.getWidth()/2;
+        int y = (getParent().getHeight()/2) - iFrm_feedbacks.getHeight()/2;
+        iFrm_feedbacks.setLocation(x, y);
+        iFrm_feedbacks.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btn_feedbacksActionPerformed
 
     private void btn_adicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_adicionarActionPerformed

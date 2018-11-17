@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 
 import jobber.backend.Conexao;
 import jobber.modelo.Conta;
+import jobber.modelo.Feedback;
 import jobber.modelo.Trabalho;
 
 public class GerenciarTrabalho extends Conexao{
@@ -124,6 +125,31 @@ public class GerenciarTrabalho extends Conexao{
         } finally {
             closeStatement(stmt, rs);
             return trab;
+        }
+    }
+
+    public ArrayList<Feedback> listaFeedbackByTrabalho(Trabalho trabalho){
+        ArrayList<Feedback> feedbacks = new ArrayList<Feedback>();
+
+        try {
+            ps = this.conexao.getConnection().prepareStatement("SELECT * FROM feedback WHERE trabalho_id=?;");
+            ps.setInt(1, trabalho.getId());
+            rs = ps.executeQuery();
+            while(rs.next()) {
+                Feedback feedback = new Feedback();
+                feedback.setId(rs.getInt("feedback_id"));
+                feedback.setComentario(rs.getString("feedback_comentario"));
+                feedback.setNota(rs.getFloat("feedback_nota"));
+                feedback.setConta_id(rs.getInt("conta_id"));
+                feedback.setTrabalho_id(trabalho.getId());
+
+                feedbacks.add(feedback);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeStatement(stmt, rs);
+            return feedbacks;
         }
     }
     

@@ -5,13 +5,26 @@
  */
 package jobber.gui.trabalhador;
 
+import java.util.ArrayList;
+
+import javax.swing.table.DefaultTableModel;
+
+import jobber.backend.Conexao;
+import jobber.backend.trabalhador.GerenciarTrabalho;
 import jobber.gui.cliente.*;
+import jobber.modelo.Feedback;
+import jobber.modelo.Trabalho;
 
 /**
  *
  * @author rfutenma
  */
 public class IFrm_Feedbacks extends javax.swing.JInternalFrame {
+
+
+    Conexao conexao;
+    Trabalho trabalho;
+    ArrayList<Feedback> feedbacks;
 
     /**
      * Creates new form IFrm_Combinando
@@ -20,6 +33,32 @@ public class IFrm_Feedbacks extends javax.swing.JInternalFrame {
         initComponents();
     }
 
+    public IFrm_Feedbacks(Conexao conexao, Trabalho trabalho) {
+        this.conexao = conexao;
+        this.trabalho = trabalho;
+        initComponents();
+        init();
+    }
+
+    public void  init() {
+        txt_nome.setText(this.trabalho.getNome());
+        txt_nome.setEnabled(false);
+        txt_id.setText(String.valueOf(this.trabalho.getId()));
+        txt_notamedia.setText(String.valueOf( (this.trabalho.getSomaNotaDeFeedback()/this.trabalho.getQntDeFeedback()) ));
+
+        GerenciarTrabalho gerenciarTrabalho = new GerenciarTrabalho(this.conexao);
+        feedbacks = gerenciarTrabalho.listaFeedbackByTrabalho(this.trabalho);
+        DefaultTableModel dtm = (DefaultTableModel) tbl_feedbacks.getModel();
+
+        dtm.setNumRows(0);
+        for(Feedback feedback: this.feedbacks) {
+
+            dtm.addRow(new Object[]{
+                    feedback.getComentario(),
+                    feedback.getNota(),
+            });
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -107,7 +146,7 @@ public class IFrm_Feedbacks extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_voltarActionPerformed
-        
+        this.dispose(); //TODO
     }//GEN-LAST:event_btn_voltarActionPerformed
 
 
