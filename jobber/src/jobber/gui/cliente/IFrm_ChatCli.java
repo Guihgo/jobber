@@ -5,9 +5,8 @@
  */
 package jobber.gui.cliente;
 
+
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 import javax.swing.JOptionPane;
 import jobber.backend.Conexao;
 import jobber.backend.cliente.ChatCli;
@@ -38,11 +37,11 @@ public class IFrm_ChatCli extends javax.swing.JInternalFrame {
         this.processo = processo;
         initComponents();
         carregaHist();
-        atualiza();
         verificaSolicitado();
     }
     
     private void carregaHist(){
+        
         ChatCli chat = new ChatCli(this.conexao);
         mensagens = chat.gerarhistorico(this.processo);
         txt_historico.setText("");        
@@ -50,30 +49,6 @@ public class IFrm_ChatCli extends javax.swing.JInternalFrame {
             txt_historico.append(mensagem.getAutor()+"   "+mensagem.getData()+":\n"+mensagem.getMsg()+"\n\n");
         }
     }
-    
-    private void atualiza(){
-        long tempo = (1000 * 10);
-        Timer timer = null;
-		if (timer == null) {
-                    timer = new Timer();
-                    TimerTask tarefa = new TimerTask() {
-                            public void run() {
-                                    try {
-                                            System.out.println("Atualizou chat");
-                                            carregaHist();
-                                    } catch (Exception e) {
-                                            e.printStackTrace();
-                                    }
-                            }
-                    };
-                    timer.scheduleAtFixedRate(tarefa, tempo, tempo);
-            }
-            
-    }
-    
-    
-    
-    
     
     private void verificaSolicitado(){
         if(processo.getStatus()>=2) btn_soliciar.setVisible(false);
@@ -97,6 +72,7 @@ public class IFrm_ChatCli extends javax.swing.JInternalFrame {
         btn_enviar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         txt_historico = new javax.swing.JTextArea();
+        btn_atualizar = new javax.swing.JButton();
 
         setClosable(true);
         setResizable(true);
@@ -124,7 +100,7 @@ public class IFrm_ChatCli extends javax.swing.JInternalFrame {
                 btn_soliciarActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_soliciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 60, -1, -1));
+        getContentPane().add(btn_soliciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 60, -1, -1));
 
         btn_cancelar.setText("Cancelar");
         btn_cancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -150,6 +126,14 @@ public class IFrm_ChatCli extends javax.swing.JInternalFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 440, 250));
 
+        btn_atualizar.setText("Atualizar");
+        btn_atualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_atualizarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_atualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -160,7 +144,6 @@ public class IFrm_ChatCli extends javax.swing.JInternalFrame {
         if(chat.enviar(processo, msg.getMsg(), conta))         
         carregaHist();
         txt_mensagem.setText("");
-        atualiza();
     }//GEN-LAST:event_btn_enviarActionPerformed
 
     private void btn_soliciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_soliciarActionPerformed
@@ -173,6 +156,7 @@ public class IFrm_ChatCli extends javax.swing.JInternalFrame {
         }
         
         
+        
     }//GEN-LAST:event_btn_soliciarActionPerformed
 
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
@@ -182,13 +166,7 @@ public class IFrm_ChatCli extends javax.swing.JInternalFrame {
             if(chat.cancela(this.processo)) System.out.println("Trabalho Cancelado");
             else System.out.println("Erro ao cancelar");
             verificaSolicitado();
-            IFrm_BuscarTrab tela = new IFrm_BuscarTrab(conexao, conta);
-            getParent().add(tela);
-            int x = (getParent().getWidth()/2) - tela.getWidth()/2;
-            int y = (getParent().getHeight()/2) - tela.getHeight()/2;
-            tela.setLocation(x, y);
-            tela.setVisible(true);
-            
+            JOptionPane.showMessageDialog(null, "Processo Cancelado");
             
         }
         
@@ -204,9 +182,14 @@ public class IFrm_ChatCli extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_btn_voltarActionPerformed
 
+    private void btn_atualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_atualizarActionPerformed
+        carregaHist();
+    }//GEN-LAST:event_btn_atualizarActionPerformed
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_atualizar;
     private javax.swing.JButton btn_cancelar;
     private javax.swing.JButton btn_enviar;
     private javax.swing.JButton btn_soliciar;

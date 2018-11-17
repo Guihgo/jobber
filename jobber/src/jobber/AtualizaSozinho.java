@@ -32,5 +32,6 @@ public class AtualizaSozinho {
 			};
 			timer.scheduleAtFixedRate(tarefa, TEMPO, TEMPO);
 		}
+        
     }
 }

@@ -71,7 +71,8 @@ public class CombinandoCli extends Conexao{
         ArrayList<Processo> processos = new ArrayList<Processo>();
 
         try {
-            ps = this.conexao.getConnection().prepareStatement("SELECT * FROM processo p INNER JOIN trabalho t ON p.trabalho_id = t.trabalho_id INNER JOIN CONTA c ON t.conta_id = c.conta_id WHERE p.conta_id=?;");
+            ps = this.conexao.getConnection().prepareStatement("SELECT * FROM processo p INNER JOIN trabalho t ON "+
+                    "p.trabalho_id = t.trabalho_id INNER JOIN CONTA c ON t.conta_id = c.conta_id WHERE p.conta_id=? AND p.processo_status between 1 and 5 order by p.processo_data DESC;");
             ps.setInt(1, conta.getId());
             rs = ps.executeQuery();
             while(rs.next()) {
