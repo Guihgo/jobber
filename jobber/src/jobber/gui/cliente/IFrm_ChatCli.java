@@ -168,9 +168,9 @@ public class IFrm_ChatCli extends javax.swing.JInternalFrame implements Internal
         Mensagem msg = new Mensagem();
         msg.setMsg(txt_mensagem.getText());
         Chat chat = new Chat(conexao);
-        if(chat.enviar(processo, msg.getMsg(), conta))         
-        carregaHist();
-        txt_mensagem.setText("");
+        if(chat.enviar(processo, msg.getMsg(), conta)) {
+            txt_mensagem.setText("");
+        }
     }//GEN-LAST:event_btn_enviarActionPerformed
 
     private void btn_soliciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_soliciarActionPerformed
