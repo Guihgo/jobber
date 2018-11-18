@@ -16,6 +16,7 @@ import javax.swing.event.InternalFrameListener;
 
 import jobber.backend.Conexao;
 import jobber.backend.Chat;
+import jobber.backend.cliente.Finalizado;
 import jobber.modelo.Conta;
 import jobber.modelo.Mensagem;
 import jobber.modelo.Processo;
@@ -77,8 +78,8 @@ public class IFrm_ChatCli extends javax.swing.JInternalFrame implements Internal
     }
 
     private void verifica(){
-        if(processo.getStatus()>=2) btn_soliciar.setVisible(false);
-        else btn_soliciar.setVisible(true);
+        if(processo.getStatus()==1||processo.getStatus()==2||processo.getStatus()==4) btn_soliciar.setVisible(true);
+        else btn_soliciar.setVisible(false);
     }
 
     /**
@@ -178,7 +179,14 @@ public class IFrm_ChatCli extends javax.swing.JInternalFrame implements Internal
         if(r == 0){
             if(chat.solicita(this.processo)) System.out.println("Trabalho Solicitado");
             else System.out.println("Erro ao solicitar");
-            verifica();
+            IFrm_CombinandoCli tela = new IFrm_CombinandoCli(conexao, conta);
+            getParent().add(tela);
+            int x = (getParent().getWidth()/2) - tela.getWidth()/2;
+            int y = (getParent().getHeight()/2) - tela.getHeight()/2;
+            tela.setLocation(x, y);
+            tela.setVisible(true);
+            this.dispose();
+            
         }
         
         

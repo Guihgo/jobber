@@ -183,7 +183,7 @@ public class IFrm_ChatTrab extends javax.swing.JInternalFrame implements Interna
         Chat chat = new Chat(this.conexao);
         int r = JOptionPane.showConfirmDialog(null, "Deseja Confirmar o trabalho?");
         if(r == 0){
-            if(chat.recusa(this.processo)) System.out.println("Trabalho Solicitado");
+            if(chat.confirma(this.processo)) System.out.println("Trabalho Solicitado");
             else System.out.println("Erro ao confirmar");
             verifica();
         }
