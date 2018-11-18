@@ -8,9 +8,7 @@ package jobber.gui.trabalhador;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import jobber.backend.Conexao;
-import jobber.backend.cliente.ChatCli;
-import jobber.backend.trabalhador.ChatTrab;
-import jobber.gui.cliente.IFrm_CombinandoCli;
+import jobber.backend.Chat;
 import jobber.modelo.Conta;
 import jobber.modelo.Mensagem;
 import jobber.modelo.Processo;
@@ -45,7 +43,7 @@ public class IFrm_ChatTrab extends javax.swing.JInternalFrame {
     
     private void carregaHist(){
         
-        ChatTrab chat = new ChatTrab(this.conexao);
+        Chat chat = new Chat(this.conexao);
         mensagens = chat.gerarhistorico(this.processo);
         txt_historico.setText("");        
         for(Mensagem mensagem: this.mensagens) { 
@@ -156,7 +154,7 @@ public class IFrm_ChatTrab extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_confirmarActionPerformed
-        ChatTrab chat = new ChatTrab(this.conexao);
+        Chat chat = new Chat(this.conexao);
         int r = JOptionPane.showConfirmDialog(null, "Deseja Confirmar o trabalho?");
         if(r == 0){
             if(chat.recusa(this.processo)) System.out.println("Trabalho Solicitado");
@@ -168,14 +166,14 @@ public class IFrm_ChatTrab extends javax.swing.JInternalFrame {
     private void btn_enviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_enviarActionPerformed
         Mensagem msg = new Mensagem();
         msg.setMsg(txt_mensagem.getText());
-        ChatTrab chat = new ChatTrab(conexao);
+        Chat chat = new Chat(conexao);
         if(chat.enviar(processo, msg.getMsg(), conta))         
         carregaHist();
         txt_mensagem.setText("");       
     }//GEN-LAST:event_btn_enviarActionPerformed
 
     private void btn_recusarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_recusarActionPerformed
-        ChatTrab chat = new ChatTrab(this.conexao);
+        Chat chat = new Chat(this.conexao);
         int r = JOptionPane.showConfirmDialog(null, "Deseja Cancelar o trabalho?");
         if(r == 0){
             if(chat.recusa(this.processo)) System.out.println("Trabalho Cancelado");
@@ -185,7 +183,7 @@ public class IFrm_ChatTrab extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_recusarActionPerformed
 
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
-        ChatTrab chat = new ChatTrab(this.conexao);
+        Chat chat = new Chat(this.conexao);
         int r = JOptionPane.showConfirmDialog(null, "Deseja Cancelar o trabalho?");
         if(r == 0){
             if(chat.cancela(this.processo)) System.out.println("Trabalho Cancelado");

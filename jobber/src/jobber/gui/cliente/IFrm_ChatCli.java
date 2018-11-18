@@ -9,7 +9,7 @@ package jobber.gui.cliente;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import jobber.backend.Conexao;
-import jobber.backend.cliente.ChatCli;
+import jobber.backend.Chat;
 import jobber.modelo.Conta;
 import jobber.modelo.Mensagem;
 import jobber.modelo.Processo;
@@ -42,7 +42,7 @@ public class IFrm_ChatCli extends javax.swing.JInternalFrame {
     
     private void carregaHist(){
         
-        ChatCli chat = new ChatCli(this.conexao);
+        Chat chat = new Chat(this.conexao);
         mensagens = chat.gerarhistorico(this.processo);
         txt_historico.setText("");        
         for(Mensagem mensagem: this.mensagens) { 
@@ -140,14 +140,14 @@ public class IFrm_ChatCli extends javax.swing.JInternalFrame {
     private void btn_enviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_enviarActionPerformed
         Mensagem msg = new Mensagem();
         msg.setMsg(txt_mensagem.getText());
-        ChatCli chat = new ChatCli(conexao);
+        Chat chat = new Chat(conexao);
         if(chat.enviar(processo, msg.getMsg(), conta))         
         carregaHist();
         txt_mensagem.setText("");
     }//GEN-LAST:event_btn_enviarActionPerformed
 
     private void btn_soliciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_soliciarActionPerformed
-        ChatCli chat = new ChatCli(this.conexao);
+        Chat chat = new Chat(this.conexao);
         int r = JOptionPane.showConfirmDialog(null, "Deseja Solicitar o trabalho?");
         if(r == 0){
             if(chat.solicita(this.processo)) System.out.println("Trabalho Solicitado");
@@ -160,7 +160,7 @@ public class IFrm_ChatCli extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_soliciarActionPerformed
 
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
-        ChatCli chat = new ChatCli(this.conexao);
+        Chat chat = new Chat(this.conexao);
         int r = JOptionPane.showConfirmDialog(null, "Deseja Cancelar o trabalho?");
         if(r == 0){
             if(chat.cancela(this.processo)) System.out.println("Trabalho Cancelado");

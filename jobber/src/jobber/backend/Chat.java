@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package jobber.backend.trabalhador;
+package jobber.backend;
 
 import jobber.backend.cliente.*;
 import java.sql.PreparedStatement;
@@ -20,13 +20,13 @@ import jobber.modelo.Processo;
  *
  * @author rfutenma
  */
-public class ChatTrab extends Conexao{
+public class Chat extends Conexao{
     private Conexao conexao;
     PreparedStatement ps = null;
     Statement stmt = null;
     ResultSet rs = null;
     
-    public ChatTrab(Conexao conexao){
+    public Chat(Conexao conexao){
         this.conexao = conexao;
     }
     
@@ -88,7 +88,25 @@ public class ChatTrab extends Conexao{
             return solicitouComSucesso;
         }
     }
-    
+
+    public boolean solicita(Processo processo){
+        boolean solicitouComSucesso = false;
+        try{
+            ps = this.conexao.getConnection().prepareStatement("UPDATE processo SET processo_status = 2 WHERE processo_id = ?");
+            ps.setInt(1, processo.getId());
+            if(ps.executeUpdate() > 0){
+                solicitouComSucesso =true;
+                processo.setStatus(2);
+            }
+
+        } catch(SQLException e){
+            e.printStackTrace();
+        } finally{
+            closeStatement(stmt, rs);
+            return solicitouComSucesso;
+        }
+    }
+
     public boolean recusa(Processo processo){
         boolean solicitouComSucesso = false;
         try{
