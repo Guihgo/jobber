@@ -42,6 +42,7 @@ public class IFrm_Trabalho extends javax.swing.JInternalFrame {
     }
     
     private void init(){
+        setTitle("Trabalho - "+ this.trabalho.getNome());
         txt_id.setText(""+trabalho.getId());
         txt_nome.setText(trabalho.getNome());
         txt_desc.setText(trabalho.getDescricao());
