@@ -143,6 +143,4 @@ public class Chat extends Conexao{
             return cancelouComSucesso;
         }
     }
-    
-    
 }

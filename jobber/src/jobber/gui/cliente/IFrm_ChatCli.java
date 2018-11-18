@@ -7,7 +7,13 @@ package jobber.gui.cliente;
 
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javax.swing.JOptionPane;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
+
 import jobber.backend.Conexao;
 import jobber.backend.Chat;
 import jobber.modelo.Conta;
@@ -18,12 +24,13 @@ import jobber.modelo.Processo;
  *
  * @author rfutenma
  */
-public class IFrm_ChatCli extends javax.swing.JInternalFrame {
+public class IFrm_ChatCli extends javax.swing.JInternalFrame implements InternalFrameListener{
 
     Conexao conexao;
     Conta conta;
     Processo processo;
     ArrayList<Mensagem> mensagens;
+    Timer timer;
     /**
      * Creates new form IFrm_Combinando
      */
@@ -35,22 +42,41 @@ public class IFrm_ChatCli extends javax.swing.JInternalFrame {
         this.conexao = conexao;
         this.conta = conta;
         this.processo = processo;
+        this.timer = new Timer();
+        this.mensagens = new ArrayList<>();
         initComponents();
-        carregaHist();
-        verificaSolicitado();
+        ficaAtualizando();
+        verifica();
+        this.btn_atualizar.setVisible(false);
+        addInternalFrameListener(this);
     }
     
     private void carregaHist(){
         
         Chat chat = new Chat(this.conexao);
-        mensagens = chat.gerarhistorico(this.processo);
-        txt_historico.setText("");        
-        for(Mensagem mensagem: this.mensagens) { 
-            txt_historico.append(mensagem.getAutor()+"   "+mensagem.getData()+":\n"+mensagem.getMsg()+"\n\n");
+        ArrayList<Mensagem> newMensagens = chat.gerarhistorico(this.processo);
+        if(newMensagens.size()>this.mensagens.size()) {
+            this.mensagens.clear();
+            txt_historico.setText("");
+            for(Mensagem mensagem: newMensagens) {
+                txt_historico.append(mensagem.getAutor()+"   "+mensagem.getData()+":\n"+mensagem.getMsg()+"\n\n");
+                this.mensagens.add(mensagem);
+            }
+            txt_historico.setCaretPosition(txt_historico.getDocument().getLength());
         }
     }
-    
-    private void verificaSolicitado(){
+
+    private void ficaAtualizando() {
+        this.timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("ficaAtualizando()");
+                carregaHist();
+            }
+        }, 500, 1000);
+    }
+
+    private void verifica(){
         if(processo.getStatus()>=2) btn_soliciar.setVisible(false);
         else btn_soliciar.setVisible(true);
     }
@@ -152,7 +178,7 @@ public class IFrm_ChatCli extends javax.swing.JInternalFrame {
         if(r == 0){
             if(chat.solicita(this.processo)) System.out.println("Trabalho Solicitado");
             else System.out.println("Erro ao solicitar");
-            verificaSolicitado();
+            verifica();
         }
         
         
@@ -165,7 +191,7 @@ public class IFrm_ChatCli extends javax.swing.JInternalFrame {
         if(r == 0){
             if(chat.cancela(this.processo)) System.out.println("Trabalho Cancelado");
             else System.out.println("Erro ao cancelar");
-            verificaSolicitado();
+            verifica();
             JOptionPane.showMessageDialog(null, "Processo Cancelado");
             this.dispose();
         }
@@ -198,5 +224,42 @@ public class IFrm_ChatCli extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea txt_historico;
     private javax.swing.JTextField txt_mensagem;
+
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void internalFrameOpened(InternalFrameEvent internalFrameEvent) {
+
+    }
+
+    @Override
+    public void internalFrameClosing(InternalFrameEvent internalFrameEvent) {
+
+    }
+
+    @Override
+    public void internalFrameClosed(InternalFrameEvent internalFrameEvent) {
+
+    }
+
+    @Override
+    public void internalFrameIconified(InternalFrameEvent internalFrameEvent) {
+
+    }
+
+    @Override
+    public void internalFrameDeiconified(InternalFrameEvent internalFrameEvent) {
+
+    }
+
+    @Override
+    public void internalFrameActivated(InternalFrameEvent internalFrameEvent) {
+
+    }
+
+    @Override
+    public void internalFrameDeactivated(InternalFrameEvent internalFrameEvent) {
+        System.out.println("internalFrameDeactivated");
+        this.timer.cancel();
+    }
 }
