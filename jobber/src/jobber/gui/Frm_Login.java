@@ -30,6 +30,7 @@ public class Frm_Login extends javax.swing.JFrame implements ActionListener{
     public Frm_Login(Conexao conexao) {
         this.conexao = conexao;
         initComponents();
+        btn_cadastre.setVisible(false);
         init();
     }
 
@@ -71,6 +72,7 @@ public class Frm_Login extends javax.swing.JFrame implements ActionListener{
         btn_cadastre = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Login");
         setMaximumSize(new java.awt.Dimension(500, 400));
         setMinimumSize(new java.awt.Dimension(500, 400));
         setPreferredSize(new java.awt.Dimension(500, 400));

@@ -78,7 +78,7 @@ public class IFrm_ChatCli extends javax.swing.JInternalFrame implements Internal
     }
 
     private void verifica(){
-        if(processo.getStatus()==1||processo.getStatus()==2||processo.getStatus()==4) btn_soliciar.setVisible(true);
+        if(processo.getStatus()==1||processo.getStatus()==4) btn_soliciar.setVisible(true);
         else btn_soliciar.setVisible(false);
     }
 
