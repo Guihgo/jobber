@@ -5,6 +5,13 @@
  */
 package jobber.gui.cliente;
 
+import javax.swing.JOptionPane;
+import jobber.backend.Conexao;
+import jobber.backend.cliente.Finalizado;
+import jobber.modelo.Conta;
+import jobber.modelo.Feedback;
+import jobber.modelo.Processo;
+
 
 
 /**
@@ -13,10 +20,20 @@ package jobber.gui.cliente;
  */
 public class IFrm_DarFeedback extends javax.swing.JInternalFrame {
 
+    Conexao conexao;
+    Processo processo;
+    Conta conta;
     /**
      * Creates new form IFrm_Combinando
      */
     public IFrm_DarFeedback() {
+        initComponents();
+    }
+    
+    public IFrm_DarFeedback(Conexao conexao,Conta conta,Processo processo){
+        this.conexao = conexao;
+        this.conta = conta;
+        this.processo = processo;
         initComponents();
     }
 
@@ -32,7 +49,7 @@ public class IFrm_DarFeedback extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         btn_voltar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        txt_nome = new javax.swing.JTextField();
+        txt_nota = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txt_comentario = new javax.swing.JTextArea();
@@ -59,7 +76,7 @@ public class IFrm_DarFeedback extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Nota:");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 110, -1, -1));
-        getContentPane().add(txt_nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, 230, -1));
+        getContentPane().add(txt_nota, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, 230, -1));
 
         jLabel3.setText("Comentário:");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 170, -1, -1));
@@ -82,11 +99,25 @@ public class IFrm_DarFeedback extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
-        // TODO add your handling code here:
+        
+        Finalizado fin = new Finalizado(conexao, conta);
+        Feedback feedback = new Feedback();
+        feedback.setNota(Float.parseFloat(txt_nota.getText()));
+        feedback.setComentario(txt_comentario.getText());
+        fin.criarFeedback(processo, feedback);
+        JOptionPane.showMessageDialog(null, "Feedback postado!");
+        IFrm_Finalizados tela = new IFrm_Finalizados(conexao, conta);
+        getParent().add(tela);
+        int x = (getParent().getWidth()/2) - tela.getWidth()/2;
+        int y = (getParent().getHeight()/2) - tela.getHeight()/2;
+        tela.setLocation(x, y);
+        tela.setVisible(true);
+        this.dispose();
+        
     }//GEN-LAST:event_btn_addActionPerformed
 
     private void btn_voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_voltarActionPerformed
-        IFrm_DarFeedback tela = new IFrm_DarFeedback();        
+        IFrm_Finalizados tela = new IFrm_Finalizados(conexao, conta);        
         getParent().add(tela);
         int x = (getParent().getWidth()/2) - tela.getWidth()/2;
         int y = (getParent().getHeight()/2) - tela.getHeight()/2;
@@ -104,6 +135,6 @@ public class IFrm_DarFeedback extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea txt_comentario;
-    private javax.swing.JTextField txt_nome;
+    private javax.swing.JTextField txt_nota;
     // End of variables declaration//GEN-END:variables
 }

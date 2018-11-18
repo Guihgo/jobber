@@ -64,9 +64,11 @@ public class IFrm_Finalizados extends javax.swing.JInternalFrame {
 
             }
             dtm.addRow(new Object[]{
+                    processo.getId(),
                     processo.getNomeTrabalho(),
                     processo.getNomeTrabalhador(),
-                    status
+                    status,
+                    processo.getIdTrab()
             });
         }
     }
@@ -83,8 +85,7 @@ public class IFrm_Finalizados extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_combinando = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btn_darFeedback = new javax.swing.JButton();
 
         setClosable(true);
         setResizable(true);
@@ -97,21 +98,28 @@ public class IFrm_Finalizados extends javax.swing.JInternalFrame {
         tbl_combinando.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         tbl_combinando.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Nome do trabalho", "Trabalhador", "Status"
+                "id", "Nome do trabalho", "Trabalhador", "Status", "idTrab"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -119,11 +127,17 @@ public class IFrm_Finalizados extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tbl_combinando);
         if (tbl_combinando.getColumnModel().getColumnCount() > 0) {
-            tbl_combinando.getColumnModel().getColumn(0).setResizable(false);
-            tbl_combinando.getColumnModel().getColumn(0).setPreferredWidth(250);
+            tbl_combinando.getColumnModel().getColumn(0).setMinWidth(0);
+            tbl_combinando.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tbl_combinando.getColumnModel().getColumn(0).setMaxWidth(0);
             tbl_combinando.getColumnModel().getColumn(1).setResizable(false);
-            tbl_combinando.getColumnModel().getColumn(1).setPreferredWidth(150);
+            tbl_combinando.getColumnModel().getColumn(1).setPreferredWidth(250);
             tbl_combinando.getColumnModel().getColumn(2).setResizable(false);
+            tbl_combinando.getColumnModel().getColumn(2).setPreferredWidth(110);
+            tbl_combinando.getColumnModel().getColumn(3).setResizable(false);
+            tbl_combinando.getColumnModel().getColumn(4).setMinWidth(0);
+            tbl_combinando.getColumnModel().getColumn(4).setPreferredWidth(0);
+            tbl_combinando.getColumnModel().getColumn(4).setMaxWidth(0);
         }
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 440, 290));
@@ -132,19 +146,40 @@ public class IFrm_Finalizados extends javax.swing.JInternalFrame {
         jLabel1.setText("Trabalhos Finalizados");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, -1, -1));
 
-        jButton1.setText("< Voltar");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
-
-        jButton2.setText("Dar Feedback");
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 60, -1, -1));
+        btn_darFeedback.setText("Dar Feedback");
+        btn_darFeedback.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_darFeedbackActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_darFeedback, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 60, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btn_darFeedbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_darFeedbackActionPerformed
+        Processo processo = new Processo();
+        int i, id;
+        i = tbl_combinando.getSelectedRow();
+        id = (int) tbl_combinando.getValueAt(i, 0);
+        System.out.println(id);        
+        processo.setId(id);        
+        Finalizado finalizado = new Finalizado(conexao, conta);
+        processo = finalizado.consultar(processo);
+        System.out.println(processo.getIdTrab());
+        IFrm_DarFeedback tela = new IFrm_DarFeedback(conexao,conta, processo);
+        getParent().add(tela);
+        int x = (getParent().getWidth()/2) - tela.getWidth()/2;
+        int y = (getParent().getHeight()/2) - tela.getHeight()/2;
+        tela.setLocation(x, y);
+        tela.setVisible(true);
+        this.dispose();        
+        
+    }//GEN-LAST:event_btn_darFeedbackActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btn_darFeedback;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbl_combinando;
