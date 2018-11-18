@@ -72,7 +72,7 @@ public class Combinando extends Conexao{
 
         try {
             ps = this.conexao.getConnection().prepareStatement("SELECT * FROM processo p INNER JOIN trabalho t ON "+
-                    "p.trabalho_id = t.trabalho_id INNER JOIN CONTA c ON t.conta_id = c.conta_id WHERE p.conta_id=? AND p.processo_status between 1 and 5 order by p.processo_data DESC;");
+                    "p.trabalho_id = t.trabalho_id INNER JOIN CONTA c ON t.conta_id = c.conta_id WHERE p.conta_id=? AND p.processo_status between 1 and 5 order by p.processo_status ASC;");
             ps.setInt(1, conta.getId());
             rs = ps.executeQuery();
             while(rs.next()) {

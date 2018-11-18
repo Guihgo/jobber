@@ -37,14 +37,36 @@ public class IFrm_Finalizados extends javax.swing.JInternalFrame {
     public void init() {
         Finalizado finalizado = new Finalizado(this.conexao, this.conta);
         this.processos = finalizado.listar(this.conta);
+        String status = null;
         DefaultTableModel dtm = (DefaultTableModel) tbl_combinando.getModel();
 
         dtm.setNumRows(0);
         for(Processo processo: this.processos) {
+            switch(processo.getStatus()){
+                case 1:
+                    status = "Combinando";
+                    break;
+                case 2:
+                    status = "Solicitado";
+                    break;
+                case 3:
+                    status = "Confirmado";
+                    break;
+                case 4:
+                    status = "Recusado";
+                    break;
+                case 5:
+                    status = "Avaliado";
+                    break;
+                case 6:
+                    status = "Cancelado";
+                    break;
+
+            }
             dtm.addRow(new Object[]{
                     processo.getNomeTrabalho(),
                     processo.getNomeTrabalhador(),
-                    processo.getStatus()
+                    status
             });
         }
     }
@@ -96,9 +118,9 @@ public class IFrm_Finalizados extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tbl_combinando);
         if (tbl_combinando.getColumnModel().getColumnCount() > 0) {
             tbl_combinando.getColumnModel().getColumn(0).setResizable(false);
-            tbl_combinando.getColumnModel().getColumn(0).setPreferredWidth(250);
+            tbl_combinando.getColumnModel().getColumn(0).setPreferredWidth(210);
             tbl_combinando.getColumnModel().getColumn(1).setResizable(false);
-            tbl_combinando.getColumnModel().getColumn(1).setPreferredWidth(150);
+            tbl_combinando.getColumnModel().getColumn(1).setPreferredWidth(110);
             tbl_combinando.getColumnModel().getColumn(2).setResizable(false);
         }
 
