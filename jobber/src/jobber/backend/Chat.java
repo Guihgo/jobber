@@ -52,7 +52,7 @@ public class Chat extends Conexao{
         ArrayList<Mensagem> mensagens = new ArrayList<Mensagem>();
 
         try {
-            ps = this.conexao.getConnection().prepareStatement(" SELECT * FROM chat c1 inner join conta c on c1.conta_id = c.conta_id where c1.processo_id=?");
+            ps = this.conexao.getConnection().prepareStatement(" SELECT * FROM chat c1 inner join conta c on c1.conta_id = c.conta_id where c1.processo_id=? ORDER BY chat_data");
             ps.setInt(1, processo.getId());
             rs = ps.executeQuery();
             while(rs.next()) {

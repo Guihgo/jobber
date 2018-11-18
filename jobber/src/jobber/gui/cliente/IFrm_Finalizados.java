@@ -84,6 +84,7 @@ public class IFrm_Finalizados extends javax.swing.JInternalFrame {
         tbl_combinando = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setClosable(true);
         setResizable(true);
@@ -131,8 +132,11 @@ public class IFrm_Finalizados extends javax.swing.JInternalFrame {
         jLabel1.setText("Trabalhos Finalizados");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, -1, -1));
 
-        jButton1.setText("jButton1");
+        jButton1.setText("< Voltar");
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
+
+        jButton2.setText("Dar Feedback");
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 60, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -140,6 +144,7 @@ public class IFrm_Finalizados extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbl_combinando;
