@@ -102,7 +102,7 @@ public class IFrm_DarFeedback extends javax.swing.JInternalFrame {
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
         
-        if(Float.parseFloat(txt_not.getText())>10 || Float.parseFloat(txt_not.getText())<10){
+        if(Float.parseFloat(txt_not.getText())<=10 && Float.parseFloat(txt_not.getText())>=0){
             Finalizado fin = new Finalizado(conexao, conta);
             Feedback feedback = new Feedback();
             feedback.setNota(Float.parseFloat(txt_not.getText()));
