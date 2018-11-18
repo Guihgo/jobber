@@ -78,7 +78,7 @@ public class IFrm_ChatTrab extends javax.swing.JInternalFrame implements Interna
     }
 
     private void verifica(){
-        if(processo.getStatus() == 2 ) {
+        if(processo.getStatus() == 2) {
             btn_recusar.setVisible(true);
             btn_confirmar.setVisible(true);
         }
@@ -186,6 +186,13 @@ public class IFrm_ChatTrab extends javax.swing.JInternalFrame implements Interna
             if(chat.confirma(this.processo)) System.out.println("Trabalho Solicitado");
             else System.out.println("Erro ao confirmar");
             verifica();
+            IFrm_CombinandoTrab tela = new IFrm_CombinandoTrab(conexao, conta);
+            getParent().add(tela);
+            int x = (getParent().getWidth()/2) - tela.getWidth()/2;
+            int y = (getParent().getHeight()/2) - tela.getHeight()/2;
+            tela.setLocation(x, y);
+            tela.setVisible(true);
+            this.dispose();
         }
     }//GEN-LAST:event_btn_confirmarActionPerformed
 
@@ -205,6 +212,13 @@ public class IFrm_ChatTrab extends javax.swing.JInternalFrame implements Interna
             if(chat.recusa(this.processo)) System.out.println("Trabalho Cancelado");
             else System.out.println("Erro ao Cancelar");
             verifica();
+            IFrm_CombinandoTrab tela = new IFrm_CombinandoTrab(conexao, conta);
+            getParent().add(tela);
+            int x = (getParent().getWidth()/2) - tela.getWidth()/2;
+            int y = (getParent().getHeight()/2) - tela.getHeight()/2;
+            tela.setLocation(x, y);
+            tela.setVisible(true);
+            this.dispose();
         }
     }//GEN-LAST:event_btn_recusarActionPerformed
 
