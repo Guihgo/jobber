@@ -14,7 +14,7 @@ import jobber.gui.Frm_Login;
 
 public class Main {
     public static void main(String args[]) {
-        System.out.println("Estamos rodando !");
+        System.out.println("Estamos rodando !!!");
         Conexao conexao = new Conexao();
 
         if(conexao.carregaDriver()) {

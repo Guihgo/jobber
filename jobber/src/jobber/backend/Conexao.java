@@ -50,7 +50,7 @@ public class Conexao {
         try {
             if(this.conn.isClosed()) {
                 System.out.println("Connection esta fechada... reconectando...");
-                this.conecta();
+                while(!this.conecta());
             }
         } catch (SQLException e) {
             System.out.println("Erro ao verificar se Connection esta closed");

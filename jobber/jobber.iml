@@ -7,7 +7,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="awtextra-1.0" level="project" />
-    <orderEntry type="library" name="mysql-connector-java-5.1.47-bin" level="project" />
+    <orderEntry type="library" exported="" name="awtextra-1.0" level="project" />
+    <orderEntry type="library" exported="" name="mysql-connector-java-5.1.47-bin" level="project" />
   </component>
 </module>
