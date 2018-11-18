@@ -25,7 +25,7 @@ public class Finalizado extends Conexao {
     public ArrayList<Processo> listar(Conta conta) {
         ArrayList<Processo> processos = new ArrayList<Processo>();
         try {
-            ps = this.conexao.getConnection().prepareStatement("SELECT * FROM conta natural join trabalho join processo on trabalho.trabalho_id = processo.trabalho_id where processo.conta_id = ? and processo_status >= 2;");
+            ps = this.conexao.getConnection().prepareStatement("SELECT * FROM conta natural join trabalho join processo on trabalho.trabalho_id = processo.trabalho_id where processo.conta_id = ? and processo_status = 3;");
             ps.setInt(1,conta.getId());
             rs = ps.executeQuery();
             while(rs.next()) {

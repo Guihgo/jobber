@@ -102,14 +102,14 @@ public class IFrm_Trabalho extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jTable1);
 
         setClosable(true);
-        setTitle("Editar Trabalho");
+        setTitle("Buscar Trabalho");
         setMaximumSize(new java.awt.Dimension(500, 450));
         setMinimumSize(new java.awt.Dimension(500, 450));
         setPreferredSize(new java.awt.Dimension(500, 450));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Editar Trabalho");
+        jLabel1.setText(""+trabalho.getNome());
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
 
         btn_voltar.setText("< Voltar");
@@ -201,8 +201,7 @@ public class IFrm_Trabalho extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_combinarActionPerformed
 
     private void btn_voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_voltarActionPerformed
-        IFrm_GerenciarTrab tela = new IFrm_GerenciarTrab();
-        
+        IFrm_BuscarTrab tela = new IFrm_BuscarTrab(conexao,conta);
         getParent().add(tela);
         int x = (getParent().getWidth()/2) - tela.getWidth()/2;
         int y = (getParent().getHeight()/2) - tela.getHeight()/2;
