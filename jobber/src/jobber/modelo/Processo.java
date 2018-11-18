@@ -7,12 +7,12 @@ public class Processo {
 
 	private int status;
 	private Timestamp data;
-        private int idConta;
+	private int idConta;
 	private int id;
 	private int idTrab;
-        private String nomeTrabalho;
-        private String nomeTrabalhador;
-        private String nomeCliente;
+	private String nomeTrabalho;
+	private String nomeTrabalhador;
+    private String nomeCliente;
 	
 	
 	

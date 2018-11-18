@@ -4,7 +4,11 @@
  * and open the template in the editor.
  */
 package jobber.gui.cliente;
-
+import jobber.backend.Conexao;
+import jobber.backend.cliente.Finalizado;
+import jobber.modelo.Processo;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 
 /**
@@ -13,11 +17,36 @@ package jobber.gui.cliente;
  */
 public class IFrm_Finalizados extends javax.swing.JInternalFrame {
 
+    Conexao conexao = null;
+    jobber.modelo.Conta conta = null;
+    ArrayList<Processo> processos;
     /**
      * Creates new form IFrm_Combinando
      */
     public IFrm_Finalizados() {
         initComponents();
+    }
+
+    public IFrm_Finalizados(Conexao conexao, jobber.modelo.Conta conta) {
+        this.conexao = conexao;
+        this.conta = conta;
+        initComponents();
+        init();
+    }
+
+    public void init() {
+        Finalizado finalizado = new Finalizado(this.conexao, this.conta);
+        this.processos = finalizado.listar(this.conta);
+        DefaultTableModel dtm = (DefaultTableModel) tbl_combinando.getModel();
+
+        dtm.setNumRows(0);
+        for(Processo processo: this.processos) {
+            dtm.addRow(new Object[]{
+                    processo.getNomeTrabalho(),
+                    processo.getNomeTrabalhador(),
+                    processo.getStatus()
+            });
+        }
     }
 
     /**

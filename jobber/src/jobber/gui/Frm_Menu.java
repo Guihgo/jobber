@@ -9,6 +9,7 @@ import jobber.backend.Conexao;
 import jobber.backend.Combinando;
 import jobber.gui.cliente.IFrm_BuscarTrab;
 import jobber.gui.cliente.IFrm_CombinandoCli;
+import jobber.gui.cliente.IFrm_Finalizados;
 import jobber.gui.trabalhador.IFrm_CombinandoTrab;
 import jobber.gui.trabalhador.IFrm_GerenciarTrab;
 import jobber.modelo.Conta;
@@ -229,6 +230,12 @@ public class Frm_Menu extends javax.swing.JFrame {
     private void btn_finalizadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_finalizadosActionPerformed
         Desktop.removeAll();
         Desktop.repaint();
+        IFrm_Finalizados frm = new IFrm_Finalizados(conexao, conta);
+        Desktop.add(frm);
+        int x = (Desktop.getWidth()/2) - frm.getWidth()/2;
+        int y = (Desktop.getHeight()/2) - frm.getHeight()/2;
+        frm.setLocation(x, y);
+        frm.show();
     }//GEN-LAST:event_btn_finalizadosActionPerformed
 
     /**
