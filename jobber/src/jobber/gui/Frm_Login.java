@@ -30,12 +30,13 @@ public class Frm_Login extends javax.swing.JFrame implements ActionListener{
     public Frm_Login(Conexao conexao) {
         this.conexao = conexao;
         initComponents();
-        btn_cadastre.setVisible(false);
+        btn_cadastre.setVisible(true);
         init();
     }
 
     private void init(){
         btn_logar.addActionListener(this);
+        btn_cadastre.addActionListener(this);
         setTitle("Faça o login");
         this.setVisible(true);
     }
@@ -51,6 +52,11 @@ public class Frm_Login extends javax.swing.JFrame implements ActionListener{
             } else {
                 JOptionPane.showMessageDialog(this, "Usuario e/ou senha estão incorretos. Tente novamente");
             }
+        }
+        else if (actionEvent.getSource() == btn_cadastre){
+            Frm_Cadastro frm_cadastro = new Frm_Cadastro(conexao);
+            frm_cadastro.setVisible(true);
+            this.dispose();
         }
     }
 

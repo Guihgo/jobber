@@ -5,11 +5,23 @@
  */
 package jobber.gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JOptionPane;
+
+import jobber.backend.Cadastro;
+import jobber.backend.Conexao;
+import jobber.backend.Login;
+import jobber.modelo.Conta;
+
 /**
  *
  * @author rfutenma
  */
-public class Frm_Cadastro extends javax.swing.JFrame {
+public class Frm_Cadastro extends javax.swing.JFrame implements ActionListener {
+
+    Conexao conexao = null;
 
     /**
      * Creates new form Frm_Cadastro
@@ -18,6 +30,54 @@ public class Frm_Cadastro extends javax.swing.JFrame {
         initComponents();
     }
 
+    public Frm_Cadastro(Conexao conexao){
+        this.conexao = conexao;
+        initComponents();
+        init();
+    }
+
+    private void init(){
+        jButton1.addActionListener(this);
+        jButton2.addActionListener(this);
+    }
+
+    public void actionPerformed(ActionEvent actionEvent) {
+        if(actionEvent.getSource()==jButton1) {
+            Cadastro cadastro = new Cadastro(this.conexao);
+            if (txt_nome.getText().replace(" ", "").equals("")||(txt_email.getText().replace(" ", "").equals(""))){
+                JOptionPane.showMessageDialog(null, "Digite um nome e email válidos!");
+            }
+            else if(txt_senha.getText().replace(" "," ").equals("")){
+                JOptionPane.showMessageDialog(null, "Senha inválida!");
+            }
+            else if (txt_senha.getText().equals(txt_confirmarSenha.getText())){
+                Conta conta = new Conta();
+                conta.setEmail(txt_email.getText());
+                conta.setNome(txt_nome.getText());
+                conta.setTipo(cb_tipo.getSelectedIndex());
+                if(cadastro.emailNaoExiste(conta)){
+                    if(cadastro.criaConta(conta,txt_senha.getText())){
+                        JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
+                        Frm_Login l = new Frm_Login(this.conexao);
+                        this.dispose();
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Erro no processo de criação");
+                    }
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Email já existente!");
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Senhas não coincidem!");
+            }
+        }
+        else if (actionEvent.getSource() == jButton2){
+            Frm_Login l = new Frm_Login(this.conexao);
+            this.dispose();
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -58,7 +118,7 @@ public class Frm_Cadastro extends javax.swing.JFrame {
         jLabel4.setText("Tipo :");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, -1, -1));
 
-        cb_tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cliente", "Trabalhador" }));
+        cb_tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Trabalhador", "Cliente" }));
         getContentPane().add(cb_tipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 140, -1));
 
         jLabel5.setText("Corfirmar Senha:");
