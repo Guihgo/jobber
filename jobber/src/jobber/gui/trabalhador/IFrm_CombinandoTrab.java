@@ -165,7 +165,7 @@ public class IFrm_CombinandoTrab extends javax.swing.JInternalFrame {
         processo.setId(id);
         Combinando comb = new Combinando(conexao);
         processo = comb.consultar(processo);
-        IFrm_ChatTrab tela = new IFrm_ChatTrab();
+        IFrm_ChatTrab tela = new IFrm_ChatTrab(conexao, conta, processo);
         getParent().add(tela);
         int x = (getParent().getWidth()/2) - tela.getWidth()/2;
         int y = (getParent().getHeight()/2) - tela.getHeight()/2;

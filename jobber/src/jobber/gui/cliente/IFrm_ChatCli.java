@@ -86,7 +86,7 @@ public class IFrm_ChatCli extends javax.swing.JInternalFrame {
         jLabel1.setText("Chat");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
 
-        btn_voltar.setText("< Trabalhos em combinação");
+        btn_voltar.setText("< Combinando");
         btn_voltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_voltarActionPerformed(evt);
@@ -109,7 +109,7 @@ public class IFrm_ChatCli extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(btn_cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 60, -1, -1));
-        getContentPane().add(txt_mensagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, 350, -1));
+        getContentPane().add(txt_mensagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 380, 260, -1));
 
         btn_enviar.setText("Enviar >");
         btn_enviar.addActionListener(new java.awt.event.ActionListener() {
@@ -132,7 +132,7 @@ public class IFrm_ChatCli extends javax.swing.JInternalFrame {
                 btn_atualizarActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_atualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, -1, -1));
+        getContentPane().add(btn_atualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -167,7 +167,7 @@ public class IFrm_ChatCli extends javax.swing.JInternalFrame {
             else System.out.println("Erro ao cancelar");
             verificaSolicitado();
             JOptionPane.showMessageDialog(null, "Processo Cancelado");
-            
+            this.dispose();
         }
         
     }//GEN-LAST:event_btn_cancelarActionPerformed
